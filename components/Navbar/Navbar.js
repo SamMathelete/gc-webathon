@@ -10,7 +10,6 @@ import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import AuthButtons from "./AuthButtons/AuthButtons";
 import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/clientApp";
@@ -145,12 +144,14 @@ function ResponsiveAppBar() {
           </Box>
           {!isLogin && <AuthButtons />}
           {isLogin && (
-            <Box sx={{ flexGrow: 0, margin: 10 }}>
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-            </Box>
-            <Button variant="contained" onClick={async () => await signOut()}>
-              Log Out
-            </Button>
+            <>
+              <Box sx={{ flexGrow: 0, margin: 10 }}>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              </Box>
+              <Button variant="contained" onClick={async () => await signOut()}>
+                Log Out
+              </Button>
+            </>
           )}
         </Toolbar>
       </Container>

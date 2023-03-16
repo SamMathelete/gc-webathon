@@ -1,5 +1,5 @@
 import Head from "next/head";
-
+import RequestsTable from "../components/RequestsTable";
 
 export default function Home() {
   return (
@@ -13,7 +13,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>Page Content</main>
+      <main></main>
     </div>
   );
 }

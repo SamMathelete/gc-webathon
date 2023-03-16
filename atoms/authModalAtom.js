@@ -2,7 +2,7 @@ import { atom } from "recoil";
 
 const defaultState = {
   open: false,
-  view: "login",
+  view: "signup",
 };
 
 export const authModalState = atom({

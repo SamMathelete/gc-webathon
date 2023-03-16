@@ -1,11 +1,12 @@
 import React from "react";
 import { Button, Stack } from "@mui/material";
-import AuthModal from "../../Modals/AuthModal/AuthModal";
+import AuthModal from "../../Modals/Auth/AuthModal";
 import { authModalState } from "../../../atoms/authModalAtom";
 import { useSetRecoilState } from "recoil";
 
 const AuthButtons = () => {
   const setModalState = useSetRecoilState(authModalState);
+
   return (
     <Stack direction="row" spacing={1}>
       <Button

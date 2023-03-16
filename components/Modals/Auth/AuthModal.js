@@ -4,7 +4,8 @@ import { useRecoilState } from "recoil";
 import { authModalState } from "../../../atoms/authModalAtom";
 import { IoCloseOutline } from "react-icons/io5";
 import OauthButtons from "./OauthButtons";
-import AuthInputs from "./AuthInputs";
+import SignUp from "./SignUp";
+import LogIn from "./LogIn";
 
 const AuthModal = () => {
   const [modalState, setModalState] = useRecoilState(authModalState);
@@ -58,13 +59,14 @@ const AuthModal = () => {
             justifyContent: "center",
             alignItems: "center",
             display: "flex",
+            flex: 1,
             flexDirection: "column",
             marginTop: "30px",
           }}
         >
           <OauthButtons />
           <Typography sx={{ marginY: "20px" }}>OR</Typography>
-          <AuthInputs />
+          {modalState.view === "signup" ? <SignUp /> : <LogIn />}
         </Box>
       </Box>
     </Modal>

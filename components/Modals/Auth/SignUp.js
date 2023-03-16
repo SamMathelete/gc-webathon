@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Stack, TextField, Box } from "@mui/material";
+import { Button, Stack, TextField, Box, Typography } from "@mui/material";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebase/clientApp";
 
@@ -9,7 +9,7 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [errorText, setErrorText] = useState("");
+  const [errorText, setErrorText] = useState(" ");
 
   const handleSignUp = async () => {
     if (password !== passwordConfirm) {
@@ -47,14 +47,21 @@ const SignUp = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <TextField
-        id="password_confirm"
-        variant="outlined"
-        label="Confirm Password"
-        type="password"
-        value={passwordConfirm}
-        onChange={(e) => setPasswordConfirm(e.target.value)}
-      />
+      <Box>
+        <TextField
+          id="password_confirm"
+          variant="outlined"
+          label="Confirm Password"
+          type="password"
+          value={passwordConfirm}
+          onChange={(e) => setPasswordConfirm(e.target.value)}
+          sx={{ width: "100%" }}
+        />
+        <Typography sx={{ color: "red", fontSize: "12px", margin: "2px" }}>
+          {errorText}
+        </Typography>
+      </Box>
+
       <Box
         sx={{
           display: "flex",

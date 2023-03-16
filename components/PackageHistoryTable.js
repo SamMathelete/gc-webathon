@@ -3,57 +3,32 @@ import { Box } from "@mui/system";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 
-const RequestsTable = () => {
-  const [requests, setRequests] = useState([]);
+const PackageHistoryTable = () => {
+  const [history, setHistory] = useState([]);
 
   useEffect(() => {
-    setRequests([
+    setHistory([
       {
         id: "1",
+        package: "1A334423",
         name: "John Doe",
         address: "123 Main St",
         city: "Anytown",
         state: "CA",
         zip: "12345",
         phone: "123-456-7890",
+        status: "Delivered",
       },
     ]);
   }, []);
 
-  const approveRequest = (id) => {
-    console.log("Approve request with id: " + id);
-  };
-
-  const rejectRequest = (id) => {
-    console.log("Reject request with id: " + id);
-  };
-
-  const ApproveButton = (params) => {
-    return (
-      <Button
-        variant="contained"
-        color="success"
-        onClick={approveRequest(params.id)}
-      >
-        Approve
-      </Button>
-    );
-  };
-
-  const RejectButton = (params) => {
-    return (
-      <Button
-        variant="contained"
-        color="error"
-        onClick={rejectRequest(params.id)}
-      >
-        Reject
-      </Button>
-    );
-  };
-
   const columns = [
     { field: "id", headerName: "Sl. No.", width: 80 },
+    {
+      field: "package",
+      headerName: "Package Number",
+      width: 150,
+    },
     { field: "name", headerName: "Name", width: 150 },
     { field: "address", headerName: "Address", width: 180 },
     { field: "city", headerName: "City", width: 120 },
@@ -65,20 +40,13 @@ const RequestsTable = () => {
       width: 130,
     },
     {
-      field: "approve",
-      headerName: "Approve",
+      field: "status",
+      headerName: "Status",
       width: 120,
-      renderCell: ApproveButton,
-    },
-    {
-      field: "reject",
-      headerName: "Reject",
-      width: 120,
-      renderCell: RejectButton,
     },
   ];
 
-  const rows = requests;
+  const rows = history;
 
   return (
     <Box
@@ -88,7 +56,7 @@ const RequestsTable = () => {
         alignItems: "center",
         justifyContent: "center",
         height: 650,
-        margin: 10,
+        margin: 5,
         width: "80vw",
         paddingTop: 2,
         borderRadius: 5,
@@ -100,10 +68,10 @@ const RequestsTable = () => {
           textAlign: "center",
           fontSize: 30,
           color: "black",
-          marginBottom: 5,
+          marginBottom: 10,
         }}
       >
-        Delivery Requests
+        Package History
       </Typography>
       <Paper
         elevation={4}
@@ -120,4 +88,4 @@ const RequestsTable = () => {
   );
 };
 
-export default RequestsTable;
+export default PackageHistoryTable;

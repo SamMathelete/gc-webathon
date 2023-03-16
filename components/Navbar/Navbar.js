@@ -35,7 +35,6 @@ function ResponsiveAppBar() {
   const [signOut, signoutLoading, signoutError] = useSignOut(auth);
   const [user, loading, error] = useAuthState(auth);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [isLogin, setIsLogin] = React.useState(false);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -142,13 +141,21 @@ function ResponsiveAppBar() {
               </Button>
             ))}
           </Box>
-          {!isLogin && <AuthButtons />}
-          {isLogin && (
+          {!true && <AuthButtons />}
+          {true && (
             <>
-              <Box sx={{ flexGrow: 0, margin: 10 }}>
+              <Box sx={{ flexGrow: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </Box>
-              <Button variant="contained" onClick={async () => await signOut()}>
+              <Button
+                style={{
+                  color: "#FFFFFF",
+                  backgroundColor: "#639cf7",
+                  marginLeft: 10,
+                }}
+                variant="contained"
+                onClick={async () => await signOut()}
+              >
                 Log Out
               </Button>
             </>

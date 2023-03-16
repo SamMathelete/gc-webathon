@@ -1,7 +1,9 @@
 import Head from "next/head";
-
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../firebase/clientApp";
 
 export default function Home() {
+  const [user, loading, error] = useAuthState(auth);
   return (
     <div>
       <Head>
@@ -13,7 +15,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>Page Content</main>
+      <main>Page Content, user: {user ? user?.email : "not signed in"}</main>
     </div>
   );
 }

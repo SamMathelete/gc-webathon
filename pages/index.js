@@ -1,5 +1,5 @@
 import Head from "next/head";
-import RequestsTable from "../components/RequestsTable";
+
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/clientApp";
 import { useRouter } from "next/router";

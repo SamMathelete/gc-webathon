@@ -15,6 +15,7 @@ import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/clientApp";
 import Icon from "@mdi/react";
 import { mdiQuadcopter } from "@mdi/js";
+import LogOut from "./AuthButtons/LogOut";
 
 const pages = [
   {

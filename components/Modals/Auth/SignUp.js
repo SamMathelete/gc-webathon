@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Stack, TextField, Box, Typography } from "@mui/material";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { auth } from "../../../firebase/clientApp";
+import { auth, firestore } from "../../../firebase/clientApp";
+import { addDoc, collection } from "@firebase/firestore";
 
 const SignUp = () => {
-  const [createUserWithEmailAndPassword, user, loading, error] =
+  const [createUserWithEmailAndPassword, userCred, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,8 +21,14 @@ const SignUp = () => {
       email,
       password
     );
-    console.log(userCredentials);
+    if (userCredentials) {
+      await addDoc(
+        collection(firestore, "users"),
+        JSON.parse(JSON.stringify(userCredentials.user))
+      );
+    }
   };
+
   return (
     <Stack
       sx={{

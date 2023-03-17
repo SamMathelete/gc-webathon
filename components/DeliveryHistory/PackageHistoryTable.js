@@ -63,15 +63,16 @@ const PackageHistoryTable = () => {
         width: "80vw",
         paddingTop: 2,
         borderRadius: 5,
-        backgroundColor: "#79e3f7",
+        backgroundColor: "black",
       }}
     >
       <Typography
         style={{
           textAlign: "center",
           fontSize: 30,
-          color: "black",
+          color: "white",
           marginBottom: 10,
+          fontWeight: "bold",
         }}
       >
         Package History

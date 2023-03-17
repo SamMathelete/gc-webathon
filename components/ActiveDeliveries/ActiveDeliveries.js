@@ -58,8 +58,11 @@ const ActiveDeliveries = () => {
         <Typography
           style={{
             fontSize: "20pt",
-            color: "black",
-            margin: 15,
+            color: "white",
+            padding: "10px",
+            fontWeight: "bold",
+            textAlign: "center",
+            backgroundColor: "black",
           }}
         >
           Active Deliveries

@@ -25,7 +25,7 @@ const AuthModal = () => {
       <Box
         sx={{
           maxWidth: "480px",
-          bgcolor: "#FFFFFF",
+          bgcolor: "#1f1f1f",
           outline: "none",
           borderRadius: "5px",
           marginTop: "80px",
@@ -50,7 +50,7 @@ const AuthModal = () => {
             display: "flex",
           }}
         >
-          <Typography sx={{ fontSize: 22 }}>
+          <Typography sx={{ fontSize: 22, color: "white" }}>
             {modalState.view === "login" ? "Log In" : "Sign Up"}
           </Typography>
         </Box>
@@ -65,7 +65,7 @@ const AuthModal = () => {
           }}
         >
           <OauthButtons />
-          <Typography sx={{ marginY: "20px" }}>OR</Typography>
+          <Typography sx={{ marginY: "20px" , color: "white"}}>OR</Typography>
           {modalState.view === "signup" ? <SignUp /> : <LogIn />}
         </Box>
       </Box>

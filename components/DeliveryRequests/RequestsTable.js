@@ -109,8 +109,11 @@ const RequestsTable = () => {
         <Typography
           style={{
             fontSize: "20pt",
-            color: "black",
-            margin: 15,
+            color: "white",
+            padding: "10px",
+            backgroundColor: "black",
+            textAlign: "center",
+            fontWeight: "bold",
           }}
         >
           Delivery Requests

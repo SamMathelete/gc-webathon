@@ -6,6 +6,8 @@ import { Typography } from "@mui/material";
 
 const AdminHome = () => {
   return (
+  <>
+      <NavBar />
     <Box
       sx={{
         display: "flex",
@@ -33,6 +35,7 @@ const AdminHome = () => {
 
       <PackageHistoryTable />
     </Box>
+    </>
   );
 };
 

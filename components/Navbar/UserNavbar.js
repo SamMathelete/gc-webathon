@@ -15,20 +15,19 @@ import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/clientApp";
 import Icon from "@mdi/react";
 import { mdiQuadcopter } from "@mdi/js";
-import LogOut from "./AuthButtons/LogOut";
 
 const pages = [
   {
-    name: "Requests",
-    link: "/requests",
+    name: "Request a Delivery",
+    link: "/request-drone",
   },
   {
-    name: "Master Map",
-    link: "/master-map",
+    name: "Track Your Deliveries",
+    link: "/track",
   },
   {
     name: "Package History",
-    link: "/package-history",
+    link: "/package-history-user",
   },
 ];
 

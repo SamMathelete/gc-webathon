@@ -2,47 +2,63 @@ import { Button, Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
+import { getDocs, collection } from "firebase/firestore";
+import { firestore as db } from "../../firebase/clientApp";
 
 const PackageHistoryTable = () => {
-  const [history, setHistory] = useState([]);
+  const [activeHistory, setActiveHistory] = useState([]);
+  const [pastHistory, setPastHistory] = useState([]);
+
+  const fetchActiveHistory = async () => {
+    const querySnapshot = await getDocs(collection(db, "active-deliveries"));
+    const activeHistoryArray = [];
+    querySnapshot.forEach((doc) => {
+      activeHistoryArray.push({
+        id: doc.id,
+        package: doc.id.slice(0, 5),
+        name: doc.data().name,
+        address: doc.data().destinationCity,
+        status: "Processing",
+      });
+    });
+    setActiveHistory(activeHistoryArray);
+  };
+
+  const fetchPastHistory = async () => {
+    const querySnapshot = await getDocs(collection(db, "past-deliveries"));
+    const pastHistoryArray = [];
+    querySnapshot.forEach((doc) => {
+      pastHistoryArray.push({
+        id: doc.id.slice(0, 5),
+        package: doc.id.slice(0, 5),
+        name: doc.data().name,
+        address: doc.data().destinationCity,
+        status: "Delivered",
+      });
+    });
+    setPastHistory(pastHistoryArray);
+  };
 
   useEffect(() => {
-    setHistory([
-      {
-        id: "1",
-        package: "1A334423",
-        name: "John Doe",
-        address: "123 Main St",
-        city: "Anytown",
-        state: "CA",
-        zip: "12345",
-        phone: "123-456-7890",
-        status: "Delivered",
-      },
-    ]);
+    fetchActiveHistory();
+    fetchPastHistory();
   }, []);
 
+  const history = [...activeHistory, ...pastHistory];
+
   const columns = [
-    { field: "id", headerName: "Sl. No.", width: 80 },
     {
-      field: "package",
+      field: "id",
       headerName: "Package Number",
-      width: 150,
+      flex: 2,
     },
-    { field: "name", headerName: "Name", width: 150 },
-    { field: "address", headerName: "Address", width: 180 },
-    { field: "city", headerName: "City", width: 120 },
-    { field: "state", headerName: "State", width: 120 },
-    { field: "zip", headerName: "Zip", width: 100 },
-    {
-      field: "phone",
-      headerName: "Phone",
-      width: 130,
-    },
+    { field: "name", headerName: "Name", flex: 2 },
+    { field: "address", headerName: "Address", flex: 3 },
+
     {
       field: "status",
       headerName: "Status",
-      width: 120,
+      flex: 1,
     },
   ];
 

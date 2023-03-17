@@ -3,11 +3,30 @@ import { Box } from "@mui/system";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../../store/auth-context";
+import { getDocs, collection, where } from "firebase/firestore";
+import { firestore } from "../../firebase/clientApp";
 
 const PackageHistoryUser = () => {
-  const [history, setHistory] = useState([]);
+  const [activeHistory, setActiveHistory] = useState([]);
   const authCtx = useContext(AuthContext);
   const user = authCtx.user;
+
+  const fetchDeliveryHistory = async () => {
+    const querySnapshot = await getDocs(
+      collection(firestore, "active-deliveries"),
+      where("uid", "==", user.uid)
+    );
+    const activeHistoryArray = [];
+    querySnapshot.forEach((doc) => {
+      activeHistoryArray.push({
+        id: doc.id,
+        name: doc.data().name,
+        address: doc.data().destinationCity,
+        status: "Processing",
+      });
+    });
+    setActiveHistory(historyArray);
+  };
 
   useEffect(() => {
     setHistory([

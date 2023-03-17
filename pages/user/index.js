@@ -1,6 +1,7 @@
 import style from "../../styles/User.module.css";
 import Image from "next/image";
 import Drone from "../../assets/DroneDelivery-pana.svg";
+import Link from "next/link";
 import NavBar from "../../components/Navbar/UserNavbar";
 
 const UserHome = () => {
@@ -24,7 +25,9 @@ const UserHome = () => {
               <form>
                 <div className={style.formGroup}>
                   <input type="email" placeholder="Have a question?" />
-                  <button type="submit">Request Delivery</button>
+                  <Link href="/user/request">
+                    <button type="submit">Request Delivery</button>
+                  </Link>
                 </div>
               </form>
             </div>

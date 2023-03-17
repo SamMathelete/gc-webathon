@@ -21,6 +21,9 @@ const firebaseApp = initializeApp(firebaseConfig);
 const messaging = getMessaging(firebaseApp);
 onMessage(messaging, (payload) => {
   console.log("Message received. ", payload);
+  new Notification(payload.notification.title, {
+    body: payload.notification.body,
+  });
   // ...
 });
 

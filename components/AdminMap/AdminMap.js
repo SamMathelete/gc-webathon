@@ -1,12 +1,13 @@
 import React from "react";
 import Map from "react-map-gl";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 export default function AdminMap() {
   return (
     <Box
       sx={{
-        borderRadius: "15px",
+        flexDirection: "column",
+        borderRadius: 5,
         marginTop: "15px",
         marginLeft: "20px",
         width: "60%",
@@ -18,13 +19,28 @@ export default function AdminMap() {
         boxShadow: 12,
       }}
     >
+      <Typography
+        sx={{
+          fontSize: "20pt",
+          color: "black",
+          margin: 1,
+          textAlign: "center",
+        }}
+      >
+        Current Deliveries
+      </Typography>
       <Map
         initialViewState={{
-          longitude: -122.4,
-          latitude: 37.8,
-          zoom: 14,
+          longitude: 85.81890681675299,
+          latitude: 20.246846400719136,
+          zoom: 12,
         }}
-        style={{ height: 600, flex: 1 }}
+        style={{
+          height: 600,
+          flex: 1,
+          overflow: "hidden",
+          bottomBorderRadius: 5,
+        }}
         mapStyle="mapbox://styles/mapbox/streets-v9"
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_KEY}
         onClick={(e) => console.log(e.lngLat)}

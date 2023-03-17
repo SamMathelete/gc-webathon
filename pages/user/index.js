@@ -25,7 +25,7 @@ const UserHome = () => {
               <form>
                 <div className={style.formGroup}>
                   <input type="email" placeholder="Have a question?" />
-                  <Link href="/user/request">
+                  <Link href="/user/request-drone">
                     <button type="submit">Request Delivery</button>
                   </Link>
                 </div>

@@ -19,7 +19,7 @@ import { mdiQuadcopter } from "@mdi/js";
 const pages = [
   {
     name: "Request a Delivery",
-    link: "/request-drone",
+    link: "/user/request-drone",
   },
   {
     name: "Track Your Deliveries",

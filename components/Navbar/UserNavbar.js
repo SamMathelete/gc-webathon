@@ -94,7 +94,7 @@ function ResponsiveAppBar() {
           <Typography
             variant="h6"
             noWrap
-            component="a"
+            component="a" 
             href="/"
             sx={{
               ml: 1,

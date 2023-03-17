@@ -1,13 +1,16 @@
 import { Box } from "@mui/system";
-import PackageHistoryUser from "../../components/DeliveryHistory/PackageHistoryUser";
-import RequestsTable from "../../components/DeliveryRequests/RequestsTable";
-import AdminMap from "../../components/AdminMap/AdminMap";
 import NavBar from "../../components/Navbar/UserNavbar";
 import { Typography } from "@mui/material";
-import { List, ListItem, ListItemText } from '@mui/material';
+import { List, ListItem, ListItemText, } from '@mui/material';
 import { useState } from "react";
+import Modal from "@mui/material";
+import ListItemButton from '@mui/material/ListItemButton';
 const History = () => {
-
+    const [selectedOrder, setSelectedOrder] = useState(null);
+    const handleOrder = (orderpackage) => {
+        // Add your code here to handle the tracking functionality
+        console.log(`Tracking order ${orderpackage}`);
+    };
     const [orders, setOrders] = useState([
         {
         id: '1',
@@ -63,7 +66,18 @@ const History = () => {
         zip: "12345",
         phone: "123-456-7890",
         status: 'Processing'
-        }
+        },
+        {
+            id: '5',
+            package: '86420',
+            name: 'Martin luther',
+            address: "728 san suiden street",
+            city: "San Francisco",
+            state: "CA",
+            zip: "12345",
+            phone: "123-456-7890",
+            status: 'Processing'
+            }
       ]);
 
   return (
@@ -74,8 +88,8 @@ const History = () => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "flex-start",
-        backgroundColor: "#1D1D1D",
-        
+        backgroundColor: "#232323",
+        borderRadius: "15px",
       }}
     >
       <Typography
@@ -96,10 +110,12 @@ const History = () => {
         flexDirection: "column",
         justifyContent: "flex-start",
         backgroundColor: "#000000",
-        borderRadius: "15px",
+        borderRadius: "20px",
         marginY: "20px",
         marginX: "40px",
-        paddingY: "15px",
+        paddingTop: "15px",
+        paddingBottom: "7px",
+        paddingX: "7px"
       }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1, marginX: "25px" }}>
             <Typography variant="h6" sx={{ flex: '0 0 20%', color: '#ffffff', fontWeight: 'bold' }}>Order No.</Typography>
@@ -107,9 +123,9 @@ const History = () => {
             <Typography variant="h6" sx={{ flex: '0 0 20%', color: '#ffffff', fontWeight: 'bold',}}>Address</Typography>
             <Typography variant="h6" sx={{ flex: '0 0 20%', color: '#ffffff', fontWeight: 'bold', textAlign: 'right' }}>Status</Typography>
         </Box>
-        <List sx={{ bgcolor: '#ffffff', borderRadius: '8px', overflow: 'hidden' }}>
+        <List sx={{ bgcolor: '#ffffff', borderRadius: '17px', overflow: 'hidden' }}>
             {orders.map(order => (
-                <ListItem key={order.id} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', px: 2 }}>
+                <ListItemButton key={order.id} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', px: 2, borderRadius: "15px"}} onClick={() => {console.log(order.package)}} divider={true}>
                 <Box sx={{ flex: '0 0 20%' }}>
                     <ListItemText primary={`Order No. ${order.package}`} primaryTypographyProps={{fontWeight: "600"}}/>
                 </Box>
@@ -135,7 +151,7 @@ const History = () => {
                     <ListItemText primary={order.status} primaryTypographyProps={{fontWeight: "600"}}/>
                     </Box>
                 </Box>
-                </ListItem>
+                </ListItemButton>
             ))}
         </List>
       </Box>

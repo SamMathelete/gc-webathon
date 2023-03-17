@@ -45,6 +45,7 @@ const SignUp = () => {
         label="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        sx={{ background: "white", borderRadius: "5px" }}
       />
       <TextField
         id="password"
@@ -53,6 +54,7 @@ const SignUp = () => {
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        sx={{ background: "white", borderRadius: "5px" }}
       />
       <Box>
         <TextField
@@ -62,7 +64,7 @@ const SignUp = () => {
           type="password"
           value={passwordConfirm}
           onChange={(e) => setPasswordConfirm(e.target.value)}
-          sx={{ width: "100%" }}
+          sx={{ width: "100%", background: "white", borderRadius: "5px" }}
         />
         <Typography sx={{ color: "red", fontSize: "12px", margin: "2px" }}>
           {errorText}
@@ -78,7 +80,7 @@ const SignUp = () => {
       >
         <Button
           variant="contained"
-          sx={{ height: "40px" }}
+          sx={{ height: "40px", background: "#FFC600", color: "black" }}
           onClick={handleSignUp}
         >
           Sign Up

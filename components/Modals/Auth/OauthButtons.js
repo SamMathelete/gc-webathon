@@ -24,7 +24,7 @@ const OauthButtons = () => {
   };
 
   return (
-    <Button variant="outlined" onClick={handleLogin} sx={{ height: "40px" }}>
+    <Button variant="outlined" onClick={handleLogin} sx={{ height: "40px", color: "#FFC600", borderColor: "#FFC600" }}>
       Sign in with Google
     </Button>
   );

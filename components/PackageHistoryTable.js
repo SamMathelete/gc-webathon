@@ -49,48 +49,42 @@ const PackageHistoryTable = () => {
   const rows = history;
 
   return (
-    <div id="history">
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          height: 600,
-          marginTop: "15px",
-          marginLeft: "20px",
-          marginRight: "20px",
-          marginBottom: "15px",
-          width: "97.2vw",
-          paddingTop: 2,
-          borderRadius: 5,
-          backgroundColor: "black",
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        height: 650,
+        margin: 5,
+        width: "80vw",
+        paddingTop: 2,
+        borderRadius: 5,
+        backgroundColor: "#79e3f7",
+      }}
+    >
+      <Typography
+        style={{
+          textAlign: "center",
+          fontSize: 30,
+          color: "black",
+          marginBottom: 10,
         }}
       >
-        <Typography
-          style={{
-            textAlign: "center",
-            fontSize: 30,
-            color: "white",
-            marginBottom: 10,
-            fontWeight: "bold",
-          }}
-        >
-          Package History
-        </Typography>
-        <Paper
-          elevation={4}
-          style={{
-            height: 600,
-            width: "100%",
-            borderRadius: 10,
-            overflow: "hidden",
-          }}
-        >
-          <DataGrid rows={rows} columns={columns} pageSize={5} />
-        </Paper>
-      </Box>
-    </div>
+        Package History
+      </Typography>
+      <Paper
+        elevation={4}
+        style={{
+          height: 600,
+          width: "100%",
+          borderRadius: 10,
+          overflow: "hidden",
+        }}
+      >
+        <DataGrid rows={rows} columns={columns} pageSize={5} />
+      </Paper>
+    </Box>
   );
 };
 

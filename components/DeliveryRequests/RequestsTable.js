@@ -73,8 +73,9 @@ const RequestsTable = () => {
 
   const columns = [
     { field: "id", headerName: "ID No.", flex: 2 },
-    { field: "source", headerName: "From", flex: 2 },
-    { field: "destination", headerName: "To", flex: 2 },
+    { field: "name", headerName: "Name", flex: 2 },
+    { field: "sourceCity", headerName: "From", flex: 2 },
+    { field: "destinationCity", headerName: "To", flex: 2 },
     { field: "weight", headerName: "Weight", flex: 1 },
     {
       field: "action",
@@ -86,40 +87,45 @@ const RequestsTable = () => {
   ];
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        height: 600,
-        marginTop: "15px",
-        marginLeft: "20px",
-        marginRight: "20px",
-        width: "50%",
-      }}
-    >
-      <Paper
-        elevation={12}
-        style={{
+    <div id="requests">
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
           height: 600,
-          width: "100%",
-          borderRadius: "15px",
-          overflow: "hidden",
+          marginTop: "15px",
+          marginLeft: "20px",
+          marginRight: "20px",
+          width: "97.25%",
         }}
       >
-        <Typography
+        <Paper
+          elevation={12}
           style={{
-            fontSize: "20pt",
-            color: "black",
-            margin: 15,
+            height: 600,
+            width: "100%",
+            borderRadius: "15px",
+            overflow: "hidden",
           }}
         >
-          Delivery Requests
-        </Typography>
-        <Divider />
+          <Typography
+            style={{
+              fontSize: "20pt",
+              color: "white",
+              padding: "10px",
+              backgroundColor: "black",
+              textAlign: "center",
+              fontWeight: "bold",
+            }}
+          >
+            Delivery Requests
+          </Typography>
+          <Divider />
 
-        <DataGrid rows={requests} columns={columns} pageSize={5} />
-      </Paper>
-    </Box>
+          <DataGrid rows={requests} columns={columns} pageSize={5} />
+        </Paper>
+      </Box>
+    </div>
   );
 };
 

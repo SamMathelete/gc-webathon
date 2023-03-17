@@ -16,19 +16,22 @@ import { auth } from "../../firebase/clientApp";
 import Icon from "@mdi/react";
 import { mdiQuadcopter } from "@mdi/js";
 import LogOut from "./AuthButtons/LogOut";
+import { AuthContext } from "../../store/auth-context";
+import { useContext } from "react";
+import { useRouter } from "next/router";
 
 const pages = [
   {
     name: "Requests",
-    link: "/requests",
+    link: "/admin#requests",
   },
   {
     name: "Master Map",
-    link: "/master-map",
+    link: "/admin#master-map",
   },
   {
     name: "Package History",
-    link: "/package-history",
+    link: "/admin#history",
   },
 ];
 
@@ -36,12 +39,20 @@ function ResponsiveAppBar() {
   const [signOut, signoutLoading, signoutError] = useSignOut(auth);
   const [user, loading, error] = useAuthState(auth);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const authCtx = useContext(AuthContext);
+
+  if (user) {
+    authCtx.login(user);
+  }
+
+  const router = useRouter();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = (link) => {
+    router.push(link);
     setAnchorElNav(null);
   };
 
@@ -104,7 +115,10 @@ function ResponsiveAppBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                <MenuItem
+                  key={page.name}
+                  onClick={handleCloseNavMenu.bind(this, page.link)}
+                >
                   <Typography textAlign="center">{page.name}</Typography>
                 </MenuItem>
               ))}
@@ -135,7 +149,7 @@ function ResponsiveAppBar() {
             {pages.map((page) => (
               <Button
                 key={page.name}
-                onClick={handleCloseNavMenu}
+                onClick={handleCloseNavMenu.bind(this, page.link)}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
                 {page.name}
@@ -162,7 +176,10 @@ function ResponsiveAppBar() {
                   marginLeft: 10,
                 }}
                 variant="contained"
-                onClick={async () => await signOut()}
+                onClick={async () => {
+                  await signOut();
+                  authCtx.logout();
+                }}
               >
                 Log Out
               </Button>

@@ -34,6 +34,7 @@ const LogIn = () => {
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        sx={{ background: "white", borderRadius: "5px" }}
       />
       <TextField
         id="password"
@@ -42,6 +43,7 @@ const LogIn = () => {
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        sx={{ background: "white", borderRadius: "5px" }}
       />
 
       <Box
@@ -54,7 +56,7 @@ const LogIn = () => {
         <Button
           variant="contained"
           type="submit"
-          sx={{ height: "40px" }}
+          sx={{ height: "40px", background: "#FFC600", color: "black"  }}
           onClick={handleLogIn}
         >
           Log In

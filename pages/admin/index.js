@@ -22,7 +22,7 @@ const AdminHome = () => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-start",
-          // backgroundColor: "white",
+          backgroundColor: "#232323",
         }}
       >
         {!user && (
@@ -61,7 +61,7 @@ const AdminHome = () => {
             marginRight: "20px",
 
             fontWeight: "400",
-            fontSize: "60px",
+            fontSize: "50px",
             letterSpacing: "-0.01em",
             lineHeight: "75px",
             textAlign: "left",
@@ -69,7 +69,7 @@ const AdminHome = () => {
             borderBottom: "1px solid #efefef98",
           }}
         >
-          Hello User
+          Dashboard
         </Typography>
         <Box
           sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}

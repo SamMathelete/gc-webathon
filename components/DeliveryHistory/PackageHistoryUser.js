@@ -1,10 +1,32 @@
-import {  Paper, Typography } from "@mui/material";
+import { Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { DataGrid } from "@mui/x-data-grid";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { AuthContext } from "../../store/auth-context";
+import { getDocs, collection, where } from "firebase/firestore";
+import { firestore } from "../../firebase/clientApp";
 
 const PackageHistoryUser = () => {
-  const [history, setHistory] = useState([]);
+  const [activeHistory, setActiveHistory] = useState([]);
+  const authCtx = useContext(AuthContext);
+  const user = authCtx.user;
+
+  const fetchDeliveryHistory = async () => {
+    const querySnapshot = await getDocs(
+      collection(firestore, "active-deliveries"),
+      where("uid", "==", user.uid)
+    );
+    const activeHistoryArray = [];
+    querySnapshot.forEach((doc) => {
+      activeHistoryArray.push({
+        id: doc.id,
+        name: doc.data().name,
+        address: doc.data().destinationCity,
+        status: "Processing",
+      });
+    });
+    setActiveHistory(historyArray);
+  };
 
   useEffect(() => {
     setHistory([
@@ -18,6 +40,7 @@ const PackageHistoryUser = () => {
         zip: "12345",
         phone: "123-456-7890",
         status: "Delivered",
+        uid: "123",
       },
     ]);
   }, []);
@@ -27,7 +50,6 @@ const PackageHistoryUser = () => {
       field: "package",
       headerName: "Package Number",
       width: 400,
-
     },
     { field: "name", headerName: "Name", width: 400 },
     // { field: "address", headerName: "Address", width: 180 },
@@ -46,7 +68,7 @@ const PackageHistoryUser = () => {
     },
   ];
 
-  const rows = history;
+  const rows = history.filter((item) => item.uid === user.uid);
 
   return (
     <Box
@@ -73,7 +95,12 @@ const PackageHistoryUser = () => {
           backgroundColor: "#ffffff",
         }}
       >
-        <DataGrid rows={rows} columns={columns} pageSize={5} style={{alignSelf: "center"}}/>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          pageSize={5}
+          style={{ alignSelf: "center" }}
+        />
       </Paper>
     </Box>
   );

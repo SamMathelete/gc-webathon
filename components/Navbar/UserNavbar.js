@@ -20,6 +20,8 @@ import useSendNotification from "../../hooks/useSendNotification";
 import { collection, getDocs } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { useContext } from "react";
+import { AuthContext } from "../../store/auth-context";
 
 const pages = [
   {
@@ -40,6 +42,11 @@ function ResponsiveAppBar() {
   const [signOut, signoutLoading, signoutError] = useSignOut(auth);
   const [user, loading, error] = useAuthState(auth);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const authCtx = useContext(AuthContext);
+
+  if (user) {
+    authCtx.login(user);
+  }
 
   const sendNotification = useSendNotification();
 
@@ -218,7 +225,10 @@ function ResponsiveAppBar() {
                   marginLeft: 10,
                 }}
                 variant="contained"
-                onClick={async () => await signOut()}
+                onClick={async () => {
+                  await signOut();
+                  authCtx.logout();
+                }}
               >
                 Log Out
               </Button>

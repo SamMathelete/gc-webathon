@@ -50,13 +50,18 @@ const RequestsTable = () => {
 
   const columns = [
     { field: "id", headerName: "Sl. No.", flex: 1 },
-    { field: "name", headerName: "Name", flex: 2 },
+    { field: "name", headerName: "Name", flex: 1.5 },
+    {
+      field: "address",
+      headerName: "Address",
+      flex: 2.5,
+    },
 
     {
       field: "action",
       headerName: "Action",
       flex: 1,
-      
+
       renderCell: ActionButtons,
     },
   ];
@@ -65,6 +70,7 @@ const RequestsTable = () => {
     {
       id: "1",
       name: "John Doe",
+      address: "123, ABC Street, XYZ City, 123456",
     },
   ];
   return (

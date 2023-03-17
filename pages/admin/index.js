@@ -1,4 +1,5 @@
 import { Box } from "@mui/system";
+import PackageHistoryTable from "../../components/PackageHistoryTable";
 import RequestsTable from "../../components/RequestsTable";
 
 const AdminHome = () => {
@@ -15,6 +16,7 @@ const AdminHome = () => {
       }}
     >
       <RequestsTable />
+      <PackageHistoryTable />
     </Box>
   );
 };

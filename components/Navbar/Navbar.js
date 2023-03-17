@@ -46,11 +46,11 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{background:"#100F0F"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
-            <Icon path={mdiQuadcopter} size={1} color="white" />
+            <Icon path={mdiQuadcopter} size={1} color="#FFC600" />
           </Box>
           <Typography
             variant="h6"
@@ -63,7 +63,7 @@ function ResponsiveAppBar() {
               display: { xs: "none", md: "flex" },
               fontWeight: 700,
               letterSpacing: ".3rem",
-              color: "inherit",
+              color: "#FFC600",
               textDecoration: "none",
             }}
           >

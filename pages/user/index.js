@@ -1,7 +1,7 @@
 import style from "../../styles/User.module.css";
 import Image from "next/image";
 import Drone from "../../assets/DroneDelivery-pana.svg";
-import NavBar from "../../components/NavBar/UserNavbar";
+import NavBar from "../../components/Navbar/UserNavbar";
 
 const UserHome = () => {
   return (

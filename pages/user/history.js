@@ -1,12 +1,8 @@
 import { Box } from "@mui/system";
 import PackageHistoryUser from "../../components/DeliveryHistory/PackageHistoryUser";
-<<<<<<< HEAD
-import NavBar from "../../components/Navbar/Navbar";
-=======
 import RequestsTable from "../../components/DeliveryRequests/RequestsTable";
 import AdminMap from "../../components/AdminMap/AdminMap";
 import NavBar from "../../components/Navbar/UserNavbar";
->>>>>>> 9705a8e1970987baf72335f07d7943b3d82576b4
 import { Typography } from "@mui/material";
 import { List, ListItem, ListItemText } from '@mui/material';
 import { useState } from "react";

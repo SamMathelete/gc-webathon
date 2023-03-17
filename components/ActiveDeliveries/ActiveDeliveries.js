@@ -43,7 +43,7 @@ const ActiveDeliveries = () => {
         marginTop: "15px",
         marginLeft: "20px",
         marginRight: "20px",
-        width: "65%",
+        width: "40%",
       }}
     >
       <Paper

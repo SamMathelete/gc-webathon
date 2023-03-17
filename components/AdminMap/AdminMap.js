@@ -23,8 +23,12 @@ export default function AdminMap() {
         sx={{
           fontSize: "20pt",
           color: "black",
-          margin: 1,
-          textAlign: "center",
+          height: "0px",
+          top: "12px",
+          left: "15px",
+          bgcolor: "transparent",
+          position: "relative",
+          zIndex: 100,
         }}
       >
         Current Deliveries
@@ -40,6 +44,7 @@ export default function AdminMap() {
           flex: 1,
           overflow: "hidden",
           bottomBorderRadius: 5,
+          position: "relative",
         }}
         mapStyle="mapbox://styles/mapbox/streets-v9"
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_KEY}

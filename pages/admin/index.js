@@ -4,39 +4,37 @@ import RequestsTable from "../../components/DeliveryRequests/RequestsTable";
 import AdminMap from "../../components/AdminMap/AdminMap";
 import NavBar from "../../components/Navbar/Navbar";
 import { Typography } from "@mui/material";
+import ActiveDeliveries from "../../components/ActiveDeliveries/ActiveDeliveries";
 
 const AdminHome = () => {
   return (
-    <>
-      <NavBar />
-      <Box
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        backgroundColor: "white",
+      }}
+    >
+      <Typography
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "flex-start",
-          backgroundColor: "white",
+          fontSize: "24pt",
+          fontWeight: 600,
+          color: "black",
+          marginTop: "40px",
+          marginLeft: "20px",
         }}
       >
-        <Typography
-          sx={{
-            fontSize: "24pt",
-            fontWeight: 600,
-            color: "black",
-            marginTop: "40px",
-            marginLeft: "20px",
-          }}
-        >
-          Dashboard
-        </Typography>
-        <Box sx={{ display: "flex", flexDirection: "row" }}>
-          <AdminMap />
+        Dashboard
+      </Typography>
+      <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
+        <AdminMap />
 
-          <RequestsTable />
-        </Box>
-
-        <PackageHistoryTable />
+        <RequestsTable />
       </Box>
-    </>
+      <ActiveDeliveries />
+      <PackageHistoryTable />
+    </Box>
   );
 };
 

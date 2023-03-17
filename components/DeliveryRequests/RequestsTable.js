@@ -10,37 +10,60 @@ import { Box } from "@mui/system";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { Done, Cancel } from "@mui/icons-material";
+import {
+  collection,
+  onSnapshot,
+  doc,
+  deleteDoc,
+  addDoc,
+  setDoc,
+} from "firebase/firestore";
+import { firestore } from "../../firebase/clientApp";
 
 const RequestsTable = () => {
-  const [requests, setRequests] = useState([
-    {
-      id: "1",
-      name: "John Doe",
-    },
-  ]);
+  const colRef = collection(firestore, "delivery-requests");
+  useEffect(() => {
+    onSnapshot(colRef, (snapshot) => {
+      var reqArray = [];
+      snapshot.docs.forEach((doc, index) => {
+        reqArray.push({ id: doc.id, ...doc.data() });
+      });
+      setRequests(reqArray);
+    });
+  }, []);
+  const [requests, setRequests] = useState([]);
 
-  const approveRequest = (id) => {
-    console.log("Approve request with id: " + id);
+  const approveRequest = async (id) => {
+    const docRef = doc(colRef, id);
+    const activeDeliveries = collection(firestore, "active-deliveries");
+    const newDocRef = doc(activeDeliveries, id);
+    let data = requests.find((req) => req.id === id);
+
+    delete data.id;
+    console.log(data);
+    await setDoc(newDocRef, data);
+    await deleteDoc(docRef);
   };
 
-  const rejectRequest = (id) => {
-    console.log("Reject request with id: " + id);
+  const rejectRequest = async (id) => {
+    const docRef = doc(colRef, id);
+    await deleteDoc(docRef);
   };
 
   const ActionButtons = (params) => {
     return (
-      <Box>
+      <Box sx={{ display: "flex" }}>
         <IconButton
           variant="contained"
           color="success"
-          onClick={approveRequest(params.id)}
+          onClick={() => approveRequest(params.id)}
         >
           <Done />
         </IconButton>
         <IconButton
           variant="contained"
           color="error"
-          onClick={rejectRequest(params.id)}
+          onClick={() => rejectRequest(params.id)}
         >
           <Cancel />
         </IconButton>
@@ -49,14 +72,10 @@ const RequestsTable = () => {
   };
 
   const columns = [
-    { field: "id", headerName: "Sl. No.", flex: 1 },
-    { field: "name", headerName: "Name", flex: 1.5 },
-    {
-      field: "address",
-      headerName: "Address",
-      flex: 2.5,
-    },
-
+    { field: "id", headerName: "ID No.", flex: 2 },
+    { field: "source", headerName: "From", flex: 2 },
+    { field: "destination", headerName: "To", flex: 2 },
+    { field: "weight", headerName: "Weight", flex: 1 },
     {
       field: "action",
       headerName: "Action",
@@ -66,13 +85,6 @@ const RequestsTable = () => {
     },
   ];
 
-  const rows = [
-    {
-      id: "1",
-      name: "John Doe",
-      address: "123, ABC Street, XYZ City, 123456",
-    },
-  ];
   return (
     <Box
       sx={{
@@ -105,7 +117,7 @@ const RequestsTable = () => {
         </Typography>
         <Divider />
 
-        <DataGrid rows={rows} columns={columns} pageSize={5} />
+        <DataGrid rows={requests} columns={columns} pageSize={5} />
       </Paper>
     </Box>
   );

@@ -2,7 +2,7 @@ import { Box } from "@mui/system";
 import PackageHistoryTable from "../../components/DeliveryHistory/PackageHistoryTable";
 import RequestsTable from "../../components/DeliveryRequests/RequestsTable";
 import AdminMap from "../../components/AdminMap/AdminMap";
-import NavBar from "../../components/NavBar/NavBar";
+import NavBar from "../../components/Navbar/Navbar";
 import { Typography } from "@mui/material";
 
 const AdminHome = () => {

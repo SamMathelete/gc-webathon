@@ -18,16 +18,16 @@ import { mdiQuadcopter } from "@mdi/js";
 
 const pages = [
   {
-    name: "Requests",
-    link: "/requests",
+    name: "Request a Delivery",
+    link: "/request-drone",
   },
   {
-    name: "Master Map",
-    link: "/master-map",
+    name: "Track Your Deliveries",
+    link: "/track",
   },
   {
     name: "Package History",
-    link: "/package-history",
+    link: "/package-history-user",
   },
 ];
 

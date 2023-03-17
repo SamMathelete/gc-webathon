@@ -11,14 +11,14 @@ const AuthButtons = () => {
     <Stack direction="row" spacing={1}>
       <Button
         variant="outlined"
-        style={{ color: "#FFFFFF", borderColor: "#FFFFFF" }}
+        style={{ color: "#FFC600", borderColor: "#FFC600" }}
         onClick={() => setModalState({ open: true, view: "signup" })}
       >
         Sign Up
       </Button>
       <Button
         variant="contained"
-        style={{ color: "#FFFFFF", backgroundColor: "#639cf7" }}
+        style={{ color: "black", backgroundColor: "#FFC600" }}
         onClick={() => setModalState({ open: true, view: "login" })}
       >
         Log In

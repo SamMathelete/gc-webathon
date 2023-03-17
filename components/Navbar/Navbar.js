@@ -67,7 +67,7 @@ function ResponsiveAppBar() {
               textDecoration: "none",
             }}
           >
-            Drone Delivery
+            AirBorneX
           </Typography>
           <Box
             sx={{

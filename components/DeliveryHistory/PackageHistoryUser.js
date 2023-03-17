@@ -43,7 +43,6 @@ const PackageHistoryUser = () => {
       field: "status",
       headerName: "Status",
       width: 400,
-      color: "white"
     },
   ];
 

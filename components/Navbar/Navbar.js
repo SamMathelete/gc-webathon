@@ -18,19 +18,20 @@ import { mdiQuadcopter } from "@mdi/js";
 import LogOut from "./AuthButtons/LogOut";
 import { AuthContext } from "../../store/auth-context";
 import { useContext } from "react";
+import { useRouter } from "next/router";
 
 const pages = [
   {
     name: "Requests",
-    link: "/requests",
+    link: "/admin#requests",
   },
   {
     name: "Master Map",
-    link: "/master-map",
+    link: "/admin#master-map",
   },
   {
     name: "Package History",
-    link: "/package-history",
+    link: "/admin#history",
   },
 ];
 
@@ -44,11 +45,14 @@ function ResponsiveAppBar() {
     authCtx.login(user);
   }
 
+  const router = useRouter();
+
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = (link) => {
+    router.push(link);
     setAnchorElNav(null);
   };
 
@@ -111,7 +115,10 @@ function ResponsiveAppBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                <MenuItem
+                  key={page.name}
+                  onClick={handleCloseNavMenu.bind(this, page.link)}
+                >
                   <Typography textAlign="center">{page.name}</Typography>
                 </MenuItem>
               ))}
@@ -142,7 +149,7 @@ function ResponsiveAppBar() {
             {pages.map((page) => (
               <Button
                 key={page.name}
-                onClick={handleCloseNavMenu}
+                onClick={handleCloseNavMenu.bind(this, page.link)}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
                 {page.name}

@@ -87,43 +87,45 @@ const RequestsTable = () => {
   ];
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        height: 600,
-        marginTop: "15px",
-        marginLeft: "20px",
-        marginRight: "20px",
-        width: "97.25%",
-      }}
-    >
-      <Paper
-        elevation={12}
-        style={{
+    <div id="requests">
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
           height: 600,
-          width: "100%",
-          borderRadius: "15px",
-          overflow: "hidden",
+          marginTop: "15px",
+          marginLeft: "20px",
+          marginRight: "20px",
+          width: "97.25%",
         }}
       >
-        <Typography
+        <Paper
+          elevation={12}
           style={{
-            fontSize: "20pt",
-            color: "white",
-            padding: "10px",
-            backgroundColor: "black",
-            textAlign: "center",
-            fontWeight: "bold",
+            height: 600,
+            width: "100%",
+            borderRadius: "15px",
+            overflow: "hidden",
           }}
         >
-          Delivery Requests
-        </Typography>
-        <Divider />
+          <Typography
+            style={{
+              fontSize: "20pt",
+              color: "white",
+              padding: "10px",
+              backgroundColor: "black",
+              textAlign: "center",
+              fontWeight: "bold",
+            }}
+          >
+            Delivery Requests
+          </Typography>
+          <Divider />
 
-        <DataGrid rows={requests} columns={columns} pageSize={5} />
-      </Paper>
-    </Box>
+          <DataGrid rows={requests} columns={columns} pageSize={5} />
+        </Paper>
+      </Box>
+    </div>
   );
 };
 

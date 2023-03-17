@@ -47,8 +47,8 @@ const AdminHome = () => {
 
           <ActiveDeliveries />
         </Box>
-        <PackageHistoryTable />
         <RequestsTable />
+        <PackageHistoryTable />
       </Box>
     </>
   );

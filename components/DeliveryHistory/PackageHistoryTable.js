@@ -49,46 +49,48 @@ const PackageHistoryTable = () => {
   const rows = history;
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        height: 600,
-        marginTop: "15px",
-        marginLeft: "20px",
-        marginRight: "20px",
-        marginBottom: "15px",
-        width: "97.2vw",
-        paddingTop: 2,
-        borderRadius: 5,
-        backgroundColor: "black",
-      }}
-    >
-      <Typography
-        style={{
-          textAlign: "center",
-          fontSize: 30,
-          color: "white",
-          marginBottom: 10,
-          fontWeight: "bold",
-        }}
-      >
-        Package History
-      </Typography>
-      <Paper
-        elevation={4}
-        style={{
+    <div id="history">
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
           height: 600,
-          width: "100%",
-          borderRadius: 10,
-          overflow: "hidden",
+          marginTop: "15px",
+          marginLeft: "20px",
+          marginRight: "20px",
+          marginBottom: "15px",
+          width: "97.2vw",
+          paddingTop: 2,
+          borderRadius: 5,
+          backgroundColor: "black",
         }}
       >
-        <DataGrid rows={rows} columns={columns} pageSize={5} />
-      </Paper>
-    </Box>
+        <Typography
+          style={{
+            textAlign: "center",
+            fontSize: 30,
+            color: "white",
+            marginBottom: 10,
+            fontWeight: "bold",
+          }}
+        >
+          Package History
+        </Typography>
+        <Paper
+          elevation={4}
+          style={{
+            height: 600,
+            width: "100%",
+            borderRadius: 10,
+            overflow: "hidden",
+          }}
+        >
+          <DataGrid rows={rows} columns={columns} pageSize={5} />
+        </Paper>
+      </Box>
+    </div>
   );
 };
 

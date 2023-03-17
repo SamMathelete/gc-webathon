@@ -13,17 +13,18 @@ const PackageHistoryUser = () => {
 
   const fetchDeliveryHistory = async () => {
     const querySnapshot = await getDocs(
-      collection(firestore, "active-deliveries"),
-      where("uid", "==", user.uid)
+      collection(firestore, "active-deliveries")
     );
     const activeHistoryArray = [];
     querySnapshot.forEach((doc) => {
-      activeHistoryArray.push({
-        id: doc.id,
-        name: doc.data().name,
-        address: doc.data().destinationCity,
-        status: "Processing",
-      });
+      if (doc.data().uid === user.uid) {
+        activeHistoryArray.push({
+          id: doc.id,
+          name: doc.data().name,
+          address: doc.data().destinationCity,
+          status: "Processing",
+        });
+      }
     });
     setActiveHistory(historyArray);
   };

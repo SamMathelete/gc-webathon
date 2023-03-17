@@ -22,36 +22,38 @@ const History = () => {
 
   const fetchActiveHistory = async () => {
     const querySnapshot = await getDocs(
-      collection(firestore, "active-deliveries"),
-      where("uid", "==", user.uid)
+      collection(firestore, "active-deliveries")
     );
     const activeHistoryArray = [];
     querySnapshot.forEach((doc) => {
-      activeHistoryArray.push({
-        id: doc.id,
-        package: doc.id.slice(0, 5),
-        name: doc.data().name,
-        address: doc.data().destinationCity,
-        status: "Processing",
-      });
+      if (doc.data().uid === user.uid) {
+        activeHistoryArray.push({
+          id: doc.id,
+          package: doc.id.slice(0, 5),
+          name: doc.data().name,
+          address: doc.data().destinationCity,
+          status: "Processing",
+        });
+      }
     });
     setActiveHistory(activeHistoryArray);
   };
 
   const fetchPastHistory = async () => {
     const querySnapshot = await getDocs(
-      collection(firestore, "past-deliveries"),
-      where("uid", "==", user.uid)
+      collection(firestore, "past-deliveries")
     );
     const pastHistoryArray = [];
     querySnapshot.forEach((doc) => {
-      pastHistoryArray.push({
-        id: doc.id,
-        package: doc.id.slice(0, 5),
-        name: doc.data().name,
-        address: doc.data().destinationCity,
-        status: "Delivered",
-      });
+      if (doc.data().uid === user.uid) {
+        pastHistoryArray.push({
+          id: doc.id,
+          package: doc.id.slice(0, 5),
+          name: doc.data().name,
+          address: doc.data().destinationCity,
+          status: "Delivered",
+        });
+      }
     });
     setPastHistory(pastHistoryArray);
   };

@@ -57,7 +57,7 @@ const LogIn = () => {
           sx={{ height: "40px" }}
           onClick={handleLogIn}
         >
-          Sign Up
+          Log In
         </Button>
       </Box>
     </Stack>

@@ -15,6 +15,7 @@ import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/clientApp";
 import Icon from "@mdi/react";
 import { mdiQuadcopter } from "@mdi/js";
+import LogOut from "./AuthButtons/LogOut";
 
 const pages = [
   {
@@ -141,25 +142,8 @@ function ResponsiveAppBar() {
               </Button>
             ))}
           </Box>
-          {!true && <AuthButtons />}
-          {true && (
-            <>
-              <Box sx={{ flexGrow: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </Box>
-              <Button
-                style={{
-                  color: "#FFFFFF",
-                  backgroundColor: "#639cf7",
-                  marginLeft: 10,
-                }}
-                variant="contained"
-                onClick={async () => await signOut()}
-              >
-                Log Out
-              </Button>
-            </>
-          )}
+          {!user && <AuthButtons />}
+          {user && <LogOut />}
         </Toolbar>
       </Container>
     </AppBar>

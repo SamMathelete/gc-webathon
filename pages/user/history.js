@@ -1,16 +1,15 @@
 import { Box } from "@mui/system";
 import NavBar from "../../components/Navbar/UserNavbar";
 import { Typography } from "@mui/material";
-import { List, ListItem, ListItemText, } from '@mui/material';
+import { List, ListItem, ListItemText, Button } from '@mui/material';
 import { useState } from "react";
-import Modal from "@mui/material";
 import ListItemButton from '@mui/material/ListItemButton';
+import HistoryModal from "../../components/Modal/User/HistoryModal";
+import { historyModalState } from "../../atoms/historyModalAtom";
+import { useSetRecoilState } from "recoil";
 const History = () => {
-    const [selectedOrder, setSelectedOrder] = useState(null);
-    const handleOrder = (orderpackage) => {
-        // Add your code here to handle the tracking functionality
-        console.log(`Tracking order ${orderpackage}`);
-    };
+    const setModalState = useSetRecoilState(historyModalState);
+    const [currentOrder, setCurrentOrder] = useState({});
     const [orders, setOrders] = useState([
         {
         id: '1',
@@ -125,7 +124,7 @@ const History = () => {
         </Box>
         <List sx={{ bgcolor: '#ffffff', borderRadius: '17px', overflow: 'hidden' }}>
             {orders.map(order => (
-                <ListItemButton key={order.id} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', px: 2, borderRadius: "15px"}} onClick={() => {console.log(order.package)}} divider={true}>
+                <ListItemButton key={order.id} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', px: 2, borderRadius: "15px"}} onClick={() => {setModalState({ open: true }); setCurrentOrder(order)}} divider={true}>
                 <Box sx={{ flex: '0 0 20%' }}>
                     <ListItemText primary={`Order No. ${order.package}`} primaryTypographyProps={{fontWeight: "600"}}/>
                 </Box>
@@ -148,7 +147,7 @@ const History = () => {
                         bgcolor: order.status === 'Delivered' ? '#54B435' : '#FDB100'
                     }}
                     >
-                    <ListItemText primary={order.status} primaryTypographyProps={{fontWeight: "600"}}/>
+                    <ListItemText primary={order.status} primaryTypographyProps={{fontWeight: "600"}}/> 
                     </Box>
                 </Box>
                 </ListItemButton>
@@ -156,6 +155,7 @@ const History = () => {
         </List>
       </Box>
     </Box>
+    <HistoryModal order={currentOrder}/>
     </>
   );
 };

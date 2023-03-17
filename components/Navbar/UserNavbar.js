@@ -12,9 +12,12 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import AuthButtons from "./AuthButtons/AuthButtons";
 import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
-import { auth } from "../../firebase/clientApp";
+import { auth, firestore } from "../../firebase/clientApp";
 import Icon from "@mdi/react";
 import { mdiQuadcopter } from "@mdi/js";
+import saveMessagingDeviceToken from "../../firebase/messaging";
+import useSendNotification from "../../hooks/useSendNotification";
+import { collection, getDocs } from "firebase/firestore";
 
 const pages = [
   {
@@ -35,6 +38,34 @@ function ResponsiveAppBar() {
   const [signOut, signoutLoading, signoutError] = useSignOut(auth);
   const [user, loading, error] = useAuthState(auth);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
+
+  const sendNotification = useSendNotification();
+
+  const [notificationList, setNotificationList] = React.useState([]);
+
+  const fetchNotificationList = async () => {
+    const snapshot = await getDocs(collection(firestore, "fcmTokens"));
+    const list = snapshot.docs.map((doc) => doc.data());
+    setNotificationList(list);
+  };
+
+  if (user) {
+    saveMessagingDeviceToken(user.email);
+    for (const notification of notificationList) {
+      if (notification.fcmToken) {
+        console.log(notification.fcmToken);
+        sendNotification(
+          notification.fcmToken,
+          "Hello",
+          "This is a test notification"
+        );
+      }
+    }
+  }
+
+  React.useEffect(() => {
+    fetchNotificationList();
+  }, []);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -66,7 +97,7 @@ function ResponsiveAppBar() {
               textDecoration: "none",
             }}
           >
-            Drone Delivery
+            AirBorneX
           </Typography>
           <Box
             sx={{

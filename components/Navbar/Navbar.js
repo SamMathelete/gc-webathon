@@ -16,6 +16,8 @@ import { auth } from "../../firebase/clientApp";
 import Icon from "@mdi/react";
 import { mdiQuadcopter } from "@mdi/js";
 import LogOut from "./AuthButtons/LogOut";
+import { AuthContext } from "../../store/auth-context";
+import { useContext } from "react";
 
 const pages = [
   {
@@ -36,6 +38,11 @@ function ResponsiveAppBar() {
   const [signOut, signoutLoading, signoutError] = useSignOut(auth);
   const [user, loading, error] = useAuthState(auth);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const authCtx = useContext(AuthContext);
+
+  if (user) {
+    authCtx.login(user);
+  }
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -162,7 +169,10 @@ function ResponsiveAppBar() {
                   marginLeft: 10,
                 }}
                 variant="contained"
-                onClick={async () => await signOut()}
+                onClick={async () => {
+                  await signOut();
+                  authCtx.logout();
+                }}
               >
                 Log Out
               </Button>

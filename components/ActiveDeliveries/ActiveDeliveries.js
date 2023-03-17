@@ -1,15 +1,7 @@
-import {
-  Button,
-  Divider,
-  Icon,
-  IconButton,
-  Paper,
-  Typography,
-} from "@mui/material";
+import { Divider, Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
-import { Done, Cancel } from "@mui/icons-material";
 import { collection, onSnapshot } from "firebase/firestore";
 import { firestore } from "../../firebase/clientApp";
 
@@ -29,8 +21,8 @@ const ActiveDeliveries = () => {
 
   const columns = [
     { field: "id", headerName: "ID No.", flex: 1 },
-    { field: "source", headerName: "Source", flex: 2 },
-    { field: "destination", headerName: "Destination", flex: 2 },
+    { field: "sourceCity", headerName: "Source", flex: 2 },
+    { field: "destinationCity", headerName: "Destination", flex: 2 },
     { field: "weight", headerName: "Weight", flex: 2 },
   ];
 

@@ -56,7 +56,7 @@ const PackageHistoryUser = () => {
         alignItems: "center",
         justifyContent: "center",
         margin: 5,
-        width: "80vw",
+        width: "80",
         borderRadius: 5,
         backgroundColor: "#1f1f1f",
         border: "7px solid #FFC600",
@@ -70,7 +70,6 @@ const PackageHistoryUser = () => {
           borderRadius: 10,
           overflow: "hidden",
           alignItems: "center",
-          alignSelf: "center",
           backgroundColor: "#ffffff",
         }}
       >

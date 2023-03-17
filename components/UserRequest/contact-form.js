@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Image from "next/image";
 import { GrMapLocation } from "react-icons/gr";
 import Icon from "@mdi/react";
 import { mdiQuadcopter } from "@mdi/js";
 import style from "../../styles/Request.module.css";
 import Script from "next/script";
+import { LocationContext } from "../../store/location-context";
 
 export default function Fetch() {
+  const mapCtx = useContext(LocationContext);
+  console.log(mapCtx);
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
@@ -107,6 +110,8 @@ export default function Fetch() {
                   name="location"
                   id="fc-generated-1-location"
                   placeholder="Enter your location..."
+                  onFocus={() => mapCtx.setIsPickup(true)}
+                  value={`${mapCtx.pickupLocation.latitude}, ${mapCtx.pickupLocation.longitude}`}
                 />
                 {/* <button type="button" onclick="getLocation()">Try It</button> */}
               </div>
@@ -127,6 +132,8 @@ export default function Fetch() {
                   name="location"
                   id="fc-generated-1-location"
                   placeholder="Enter your location..."
+                  onFocus={() => mapCtx.setIsPickup(false)}
+                  value={`${mapCtx.dropoffLocation.latitude}, ${mapCtx.dropoffLocation.longitude}`}
                 />
                 {/* <button type="button" onclick="getLocation()">Try It</button> */}
               </div>

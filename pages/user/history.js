@@ -74,7 +74,7 @@ const History = () => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "flex-start",
-        backgroundColor: "#1D1D1D",
+        // backgroundColor: "#1D1D1D",
         
       }}
     >
@@ -99,7 +99,10 @@ const History = () => {
         borderRadius: "15px",
         marginY: "20px",
         marginX: "40px",
-        paddingY: "15px",
+        // paddingY: "15px",
+        paddingTop: "15px",
+        paddingX: "5px",
+        overflow: "hidden",
       }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1, marginX: "25px" }}>
             <Typography variant="h6" sx={{ flex: '0 0 20%', color: '#ffffff', fontWeight: 'bold' }}>Order No.</Typography>

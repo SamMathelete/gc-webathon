@@ -4,7 +4,7 @@
   position: absolute;
   right: 1.5%;
   top: 12%;
-  width: 450px;
+  width: 35%;
   height: auto;
   background: rgb(255, 255, 255);
   border-radius: 20px;
@@ -131,7 +131,7 @@
 .formcarryContainer button {
   font-family: "Inter", sans-serif;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 16px;
   letter-spacing: -0.02em;
   height: 40px;
   line-height: 24px;

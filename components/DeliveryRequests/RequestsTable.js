@@ -18,7 +18,8 @@ import {
   addDoc,
   setDoc,
 } from "firebase/firestore";
-import { firestore } from "../../firebase/clientApp";
+import { ref, onValue, set } from "@firebase/database";
+import { firestore, db } from "../../firebase/clientApp";
 
 const RequestsTable = () => {
   const colRef = collection(firestore, "delivery-requests");
@@ -33,6 +34,25 @@ const RequestsTable = () => {
   }, []);
   const [requests, setRequests] = useState([]);
 
+  const [droneAvailable, setDroneAvailable] = useState(0);
+  const [drones, setDrones] = useState([]);
+  useEffect(() => {
+    const query = ref(db, "drones");
+
+    return onValue(query, (snapshot) => {
+      const data = snapshot.val();
+      if (snapshot.exists()) {
+        setDroneAvailable(
+          Object.keys(data)
+            .map((key) => (!data[key].isActive ? 1 : 0))
+            .reduce((sum, val) => sum + val, 0)
+        );
+        setDrones(Object.keys(data).map((key) => data[key]));
+        console.log(droneAvailable);
+      }
+    });
+  }, []);
+
   const approveRequest = async (id) => {
     const docRef = doc(colRef, id);
     const activeDeliveries = collection(firestore, "active-deliveries");
@@ -40,7 +60,11 @@ const RequestsTable = () => {
     let data = requests.find((req) => req.id === id);
 
     delete data.id;
-    console.log(data);
+    const drone = drones.find((drone) => drone.isActive === false);
+    data.status = "Processing";
+    data.droneId = drone.droneId;
+    const query = ref(db, `drones/${drone.droneId}`);
+    set(query, { ...drone, isActive: true });
     await setDoc(newDocRef, data);
     await deleteDoc(docRef);
   };
@@ -57,6 +81,7 @@ const RequestsTable = () => {
           variant="contained"
           color="success"
           onClick={() => approveRequest(params.id)}
+          disabled={droneAvailable === 0 ? true : false}
         >
           <Done />
         </IconButton>
@@ -73,59 +98,53 @@ const RequestsTable = () => {
 
   const columns = [
     { field: "id", headerName: "ID No.", flex: 2 },
-    { field: "name", headerName: "Name", flex: 2 },
     { field: "sourceCity", headerName: "From", flex: 2 },
     { field: "destinationCity", headerName: "To", flex: 2 },
     { field: "weight", headerName: "Weight", flex: 1 },
     {
       field: "action",
       headerName: "Action",
-      flex: 1,
-
+      flex: 2,
       renderCell: ActionButtons,
     },
   ];
 
   return (
-    <div id="requests">
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        height: 600,
+        marginTop: "15px",
+        marginLeft: "20px",
+        width: "10%",
+        marginRight: "20px",
+        flex: 1,
+      }}
+    >
+      <Paper
+        elevation={12}
+        style={{
           height: 600,
-          marginTop: "15px",
-          marginLeft: "20px",
-          marginRight: "20px",
-          width: "97.25%",
+          width: "100%",
+          borderRadius: "15px",
+          overflow: "hidden",
         }}
       >
-        <Paper
-          elevation={12}
+        <Typography
           style={{
-            height: 600,
-            width: "100%",
-            borderRadius: "15px",
-            overflow: "hidden",
+            fontSize: "20pt",
+
+            padding: "15px",
           }}
         >
-          <Typography
-            style={{
-              fontSize: "20pt",
-              color: "white",
-              padding: "10px",
-              backgroundColor: "black",
-              textAlign: "center",
-              fontWeight: "bold",
-            }}
-          >
-            Delivery Requests
-          </Typography>
-          <Divider />
+          Delivery Requests
+        </Typography>
+        <Divider />
 
-          <DataGrid rows={requests} columns={columns} pageSize={5} />
-        </Paper>
-      </Box>
-    </div>
+        <DataGrid rows={requests} columns={columns} pageSize={5} />
+      </Paper>
+    </Box>
   );
 };
 

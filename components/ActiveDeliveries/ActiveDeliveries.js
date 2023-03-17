@@ -1,9 +1,19 @@
-import { Divider, Paper, Typography } from "@mui/material";
+import {
+  Button,
+  Divider,
+  Icon,
+  IconButton,
+  LinearProgress,
+  Paper,
+  Slider,
+  Typography,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { collection, onSnapshot } from "firebase/firestore";
-import { firestore } from "../../firebase/clientApp";
+import { firestore, db } from "../../firebase/clientApp";
+import { onValue, ref, set } from "@firebase/database";
 
 const ActiveDeliveries = () => {
   useEffect(() => {
@@ -11,19 +21,100 @@ const ActiveDeliveries = () => {
     onSnapshot(colRef, (snapshot) => {
       var reqArray = [];
       snapshot.docs.forEach((doc, index) => {
-        reqArray.push({ id: index, ...doc.data() });
+        reqArray.push({ id: doc.id, ...doc.data() });
       });
       setRequests(reqArray);
       console.log(reqArray);
     });
   }, []);
+
+  const [dronePosition, setDronePosition] = useState([]);
+  useEffect(() => {
+    const query = ref(db, "drones");
+
+    return onValue(query, (snapshot) => {
+      const data = snapshot.val();
+      if (snapshot.exists()) {
+        setDronePosition(data);
+        console.log(data);
+      }
+    });
+  }, []);
   const [requests, setRequests] = useState([]);
 
+  const DistanceSlider = (level) => {
+    return (
+      <LinearProgress
+        value={calculateProgress(
+          level.row.source,
+          level.row.destination,
+          dronePosition[level.row.droneId]
+        )}
+        variant={
+          level.row.status === "In-Transit" ? "determinate" : "indeterminate"
+        }
+        sx={{ width: "100%", marginRight: "15px" }}
+      />
+    );
+  };
+
+  const calculateProgress = (source, target, position) => {
+    try {
+      const distFromSource =
+        ((position.lng - source.longitude) ** 2 +
+          (position.lat - source.latitude) ** 2) **
+        0.5;
+      const distFromTarget =
+        ((position.lng - target.longitude) ** 2 +
+          (position.lat - target.latitude) ** 2) **
+        0.5;
+
+      return (distFromTarget / (distFromSource + distFromTarget)) * 100;
+    } catch (err) {
+      return 0;
+    }
+  };
+
+  const handleDeliver = async (docId) => {
+    const colRef = collection(firestore, "active-deliveries");
+    const pastColRef = collection(firestore, "past-deliveries");
+    const newDocRef = doc(pastColRef, docId);
+    var docData = requests.find((req) => req.id === docId);
+    docData.status = "Delivered";
+
+    await setDoc(newDocRef, docData);
+    const docRef = doc(colRef, docId);
+
+    console.log(dronePosition);
+    const droneId = requests.find((req) => req.id === docId).droneId;
+    const query = ref(db, `drones/${droneId}`);
+    set(query, { ...dronePosition[droneId], isActive: false });
+    await deleteDoc(docRef);
+  };
+  const Deliver = (id) => {
+    return <Button onClick={() => handleDeliver(id.id)}>Deliver</Button>;
+  };
+
   const columns = [
-    { field: "id", headerName: "ID No.", flex: 1 },
-    { field: "sourceCity", headerName: "Source", flex: 2 },
-    { field: "destinationCity", headerName: "Destination", flex: 2 },
-    { field: "weight", headerName: "Weight", flex: 2 },
+    { field: "id", headerName: "ID No.", flex: 3 },
+    { field: "status", headerName: "Status", flex: 1 },
+    { field: "weight", headerName: "Weight", flex: 1 },
+
+    // { field: "source", headerName: "Source", flex: 2 },
+    {
+      field: "progress",
+      headerName: "Progress",
+      flex: 3,
+      renderCell: (id) => DistanceSlider(id),
+    },
+    { field: "droneId", headerName: "Drone ID", flex: 1 },
+    {
+      field: "simulate",
+      headerName: " Simulate",
+      flex: 1,
+      renderCell: (id) => Deliver(id),
+    },
+    // { field: "destination", headerName: "Destination", flex: 2 },
   ];
 
   return (
@@ -34,8 +125,9 @@ const ActiveDeliveries = () => {
         height: 600,
         marginTop: "15px",
         marginLeft: "20px",
+        width: "10%",
         marginRight: "20px",
-        width: "40%",
+        flex: 1,
       }}
     >
       <Paper
@@ -50,11 +142,8 @@ const ActiveDeliveries = () => {
         <Typography
           style={{
             fontSize: "20pt",
-            color: "white",
-            padding: "10px",
-            fontWeight: "bold",
-            textAlign: "center",
-            backgroundColor: "black",
+
+            padding: "15px",
           }}
         >
           Active Deliveries

@@ -1,52 +1,63 @@
-import { useState, useContext } from "react";
-import Image from "next/image";
+import { useContext, useRef } from "react";
 import { GrMapLocation } from "react-icons/gr";
-import Icon from "@mdi/react";
-import { mdiQuadcopter } from "@mdi/js";
 import style from "../../styles/Request.module.css";
 import Script from "next/script";
 import { LocationContext } from "../../store/location-context";
+import { AuthContext } from "../../store/auth-context";
+import { setDoc, doc, GeoPoint } from "firebase/firestore";
+import { firestore } from "../../firebase/clientApp";
 
 export default function Fetch() {
   const mapCtx = useContext(LocationContext);
+  const authCtx = useContext(AuthContext);
   console.log(mapCtx);
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
 
-  const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState("");
+  const fullNameRef = useRef();
+  const emailRef = useRef();
+  const phoneRef = useRef();
+  const pickUpRef = useRef();
+  const dropOffRef = useRef();
+  const sourceCityRef = useRef();
+  const destinationCityRef = useRef();
+  const weightRef = useRef();
 
-  function submit(e) {
-    // This will prevent page refresh
+  const submitHandler = async (e) => {
     e.preventDefault();
+    const enteredName = fullNameRef.current.value;
+    const enteredEmail = emailRef.current.value;
+    const enteredPhone = phoneRef.current.value;
+    const enteredPickUpCity = sourceCityRef.current.value;
+    const enteredDropOffCity = destinationCityRef.current.value;
+    const enteredWeight = weightRef.current.value;
 
-    // replace this with your own unique endpoint URL
-    fetch("https://formcarry.com/s/V4vJoJx6AM", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({ email: email, message: message }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.code === 200) {
-          setSubmitted(true);
-        } else {
-          setError(res.message);
-        }
-      })
-      .catch((error) => setError(error));
-  }
+    const data = {
+      name: enteredName,
+      email: enteredEmail,
+      phone: enteredPhone,
+      source: new GeoPoint(
+        mapCtx.pickupLocation.latitude,
+        mapCtx.pickupLocation.longitude
+      ),
+      sourceCity: enteredPickUpCity,
+      destinationCity: enteredDropOffCity,
+      destination: new GeoPoint(
+        mapCtx.dropoffLocation.latitude,
+        mapCtx.dropoffLocation.longitude
+      ),
+      uid: authCtx.user.uid,
+      weight: enteredWeight,
+    };
 
-  if (error) {
-    return <p>{error}</p>;
-  }
+    await setDoc(doc(firestore, "delivery-requests", authCtx.user.uid), data);
 
-  if (submitted) {
-    return <p>We have received your message, thank you for contacting us!</p>;
-  }
+    fullNameRef.current.value = "";
+    emailRef.current.value = "";
+    phoneRef.current.value = "";
+    pickUpRef.current.value = "";
+    dropOffRef.current.value = "";
+
+    alert("Your request has been submitted!");
+  };
 
   return (
     <>
@@ -58,17 +69,13 @@ export default function Fetch() {
           </div>
 
           <section className={style.formcarryContainer}>
-            <form
-              action="https://formcarry.com/s/V4vJoJx6AM"
-              method="POST"
-              target="_blank"
-              enctype="multipart/form-data"
-            >
+            <form onSubmit={submitHandler}>
               <div className={style.formcarryBlock}>
                 <label for="fc-generated-1-name">Full Name</label>
                 <input
                   type="text"
                   name="name"
+                  ref={fullNameRef}
                   id="fc-generated-1-name"
                   placeholder="Your first and last name"
                 />
@@ -79,6 +86,7 @@ export default function Fetch() {
                 <input
                   type="email"
                   name="email"
+                  ref={emailRef}
                   id="fc-generated-1-email"
                   placeholder="john@doe.com"
                 />
@@ -89,8 +97,42 @@ export default function Fetch() {
                 <input
                   type="tel"
                   name="phone"
+                  ref={phoneRef}
                   id="fc-generated-1-phone"
                   placeholder="Enter your phone number..."
+                />
+              </div>
+
+              <div className={style.formcarryBlock}>
+                <label for="fc-generated-1-phone">Pickup City</label>
+                <input
+                  type="tel"
+                  name="sourceCity"
+                  ref={sourceCityRef}
+                  id="fc-generated-1-phone"
+                  placeholder="Enter the source city..."
+                />
+              </div>
+
+              <div className={style.formcarryBlock}>
+                <label for="fc-generated-1-phone">Dropoff City</label>
+                <input
+                  type="tel"
+                  name="destinationCity"
+                  ref={destinationCityRef}
+                  id="fc-generated-1-phone"
+                  placeholder="Enter the destination city..."
+                />
+              </div>
+
+              <div className={style.formcarryBlock}>
+                <label for="fc-generated-1-phone">Weight</label>
+                <input
+                  type="tel"
+                  name="weight"
+                  ref={weightRef}
+                  id="fc-generated-1-phone"
+                  placeholder="Enter the weight..."
                 />
               </div>
 
@@ -109,6 +151,7 @@ export default function Fetch() {
                   type="text"
                   name="location"
                   id="fc-generated-1-location"
+                  ref={pickUpRef}
                   placeholder="Enter your location..."
                   onFocus={() => mapCtx.setIsPickup(true)}
                   value={`${mapCtx.pickupLocation.latitude}, ${mapCtx.pickupLocation.longitude}`}
@@ -130,6 +173,7 @@ export default function Fetch() {
                 <input
                   type="text"
                   name="location"
+                  ref={dropOffRef}
                   id="fc-generated-1-location"
                   placeholder="Enter your location..."
                   onFocus={() => mapCtx.setIsPickup(false)}

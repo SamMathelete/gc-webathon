@@ -1,10 +1,13 @@
-import {  Paper, Typography } from "@mui/material";
+import { Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { DataGrid } from "@mui/x-data-grid";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { AuthContext } from "../../store/auth-context";
 
 const PackageHistoryUser = () => {
   const [history, setHistory] = useState([]);
+  const authCtx = useContext(AuthContext);
+  const user = authCtx.user;
 
   useEffect(() => {
     setHistory([
@@ -18,6 +21,7 @@ const PackageHistoryUser = () => {
         zip: "12345",
         phone: "123-456-7890",
         status: "Delivered",
+        uid: "123",
       },
     ]);
   }, []);
@@ -27,7 +31,6 @@ const PackageHistoryUser = () => {
       field: "package",
       headerName: "Package Number",
       width: 400,
-
     },
     { field: "name", headerName: "Name", width: 400 },
     // { field: "address", headerName: "Address", width: 180 },
@@ -46,7 +49,7 @@ const PackageHistoryUser = () => {
     },
   ];
 
-  const rows = history;
+  const rows = history.filter((item) => item.uid === user.uid);
 
   return (
     <Box
@@ -73,7 +76,12 @@ const PackageHistoryUser = () => {
           backgroundColor: "#ffffff",
         }}
       >
-        <DataGrid rows={rows} columns={columns} pageSize={5} style={{alignSelf: "center"}}/>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          pageSize={5}
+          style={{ alignSelf: "center" }}
+        />
       </Paper>
     </Box>
   );

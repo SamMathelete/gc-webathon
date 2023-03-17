@@ -5,6 +5,7 @@ import LocationContextProvider from "../store/location-context";
 import { messaging } from "../firebase/clientApp";
 import { useEffect } from "react";
 import { onMessage } from "firebase/messaging";
+import AuthContextProvider from "../store/auth-context";
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
@@ -20,13 +21,15 @@ function MyApp({ Component, pageProps }) {
     check();
   }, []);
   return (
-    <LocationContextProvider>
-      <RecoilRoot>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </RecoilRoot>
-    </LocationContextProvider>
+    <AuthContextProvider>
+      <LocationContextProvider>
+        <RecoilRoot>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </RecoilRoot>
+      </LocationContextProvider>
+    </AuthContextProvider>
   );
 }
 

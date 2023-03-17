@@ -73,8 +73,9 @@ const RequestsTable = () => {
 
   const columns = [
     { field: "id", headerName: "ID No.", flex: 2 },
-    { field: "source", headerName: "From", flex: 2 },
-    { field: "destination", headerName: "To", flex: 2 },
+    { field: "name", headerName: "Name", flex: 2 },
+    { field: "sourceCity", headerName: "From", flex: 2 },
+    { field: "destinationCity", headerName: "To", flex: 2 },
     { field: "weight", headerName: "Weight", flex: 1 },
     {
       field: "action",
@@ -94,7 +95,7 @@ const RequestsTable = () => {
         marginTop: "15px",
         marginLeft: "20px",
         marginRight: "20px",
-        width: "50%",
+        width: "97.25%",
       }}
     >
       <Paper

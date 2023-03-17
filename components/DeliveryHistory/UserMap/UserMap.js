@@ -44,12 +44,12 @@ export default function UserMap() {
       sx={{
         flexDirection: "column",
         borderRadius: 5,
-        marginTop: "15px",
+        marginTop: "50px",
         marginLeft: "20px",
         width: "60%",
         maxWidth: "1000px",
         overflow: "hidden",
-        height: 600,
+        height: 800,
         display: "flex",
         flexGrow: 2,
         boxShadow: 12,
@@ -73,10 +73,10 @@ export default function UserMap() {
         initialViewState={{
           longitude: 85.81890681675299,
           latitude: 20.246846400719136,
-          zoom: 1,
+          zoom: 13,
         }}
         style={{
-          height: 600,
+          height: 800,
           flex: 1,
           overflow: "hidden",
           bottomBorderRadius: 5,

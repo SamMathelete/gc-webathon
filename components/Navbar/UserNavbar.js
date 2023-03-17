@@ -18,6 +18,8 @@ import { mdiQuadcopter } from "@mdi/js";
 import saveMessagingDeviceToken from "../../firebase/messaging";
 import useSendNotification from "../../hooks/useSendNotification";
 import { collection, getDocs } from "firebase/firestore";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 const pages = [
   {
@@ -26,11 +28,11 @@ const pages = [
   },
   {
     name: "Track Your Deliveries",
-    link: "/track",
+    link: "/user",
   },
   {
     name: "Package History",
-    link: "/package-history-user",
+    link: "/user/history",
   },
 ];
 
@@ -49,19 +51,25 @@ function ResponsiveAppBar() {
     setNotificationList(list);
   };
 
-  if (user) {
-    saveMessagingDeviceToken(user.email);
-    for (const notification of notificationList) {
-      if (notification.fcmToken) {
-        console.log(notification.fcmToken);
-        sendNotification(
-          notification.fcmToken,
-          "Hello",
-          "This is a test notification"
-        );
-      }
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user) {
+      const check = async () => {
+        await saveMessagingDeviceToken(user.email);
+        for (const notification of notificationList) {
+          if (notification.fcmToken) {
+            sendNotification(
+              notification.fcmToken,
+              "Hello",
+              "This is a test notification"
+            );
+          }
+        }
+      };
+      check();
     }
-  }
+  }, [user]);
 
   React.useEffect(() => {
     fetchNotificationList();
@@ -71,7 +79,8 @@ function ResponsiveAppBar() {
     setAnchorElNav(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = (link) => {
+    router.push(link);
     setAnchorElNav(null);
   };
 
@@ -99,79 +108,96 @@ function ResponsiveAppBar() {
           >
             AirBorneX
           </Typography>
-          <Box
-            sx={{
-              flexGrow: 1,
-              display: { xs: "flex", md: "none" },
-            }}
-          >
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
+          {!user && (
+            <Box
               sx={{
-                display: { xs: "block", md: "none" },
+                flexGrow: 1,
+                display: { xs: "none", md: "none" },
+              }}
+            />
+          )}
+          {user && (
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: "flex", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page.name}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: "block", md: "none" },
+                }}
+              >
+                {pages.map((page) => (
+                  <MenuItem
+                    key={page.name}
+                    onClick={handleCloseNavMenu.bind(this, page.link)}
+                  >
+                    <Typography textAlign="center">{page.name}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          )}
           <Box sx={{ flexGrow: 0, display: { xs: "flex", md: "none" } }}>
-            <Icon path={mdiQuadcopter} size={1} color="white" />
+            <Icon path={mdiQuadcopter} size={1} color="#FFC600" />
           </Box>
           <Typography
-            variant="h5"
+            variant="h6"
             noWrap
             component="a"
-            href=""
+            href="/"
             sx={{
               ml: 1,
               mr: 2,
               display: { xs: "flex", md: "none" },
-              flexGrow: 1,
               fontWeight: 700,
               letterSpacing: ".3rem",
-              color: "inherit",
+              color: "#FFC600",
               textDecoration: "none",
             }}
           >
-            Drone Delivery
+            AirBorneX
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page.name}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page.name}
-              </Button>
-            ))}
-          </Box>
+          {!user && (
+            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "flex" } }} />
+          )}
+          {user && (
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+              {pages.map((page) => (
+                <Button
+                  key={page.name}
+                  onClick={handleCloseNavMenu.bind(this, page.link)}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                >
+                  {page.name}
+                </Button>
+              ))}
+            </Box>
+          )}
           {!user && <AuthButtons />}
           {user && (
             <>

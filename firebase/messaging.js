@@ -23,13 +23,6 @@ const saveMessagingDeviceToken = async (uid) => {
       console.log("fcmToken", fcmToken);
       const fcmTokenRef = doc(firestore, FCM_TOKEN_COLLECTION, uid);
       await setDoc(fcmTokenRef, { fcmToken });
-
-      onMessage(msg, (message) => {
-        console.log(message.notification);
-        new Notification(message.notification.title, {
-          body: message.notification.body,
-        });
-      });
     } else {
       requestPermission(uid);
     }

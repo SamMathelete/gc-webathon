@@ -1,33 +1,29 @@
-import { initializeApp } from "firebase/app";
-import { onMessage } from "firebase/messaging";
-import { getMessaging, onBackgroundMessage } from "firebase/messaging/sw";
+importScripts("https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js");
+importScripts(
+  "https://www.gstatic.com/firebasejs/8.10.1/firebase-messaging.js"
+);
 
 // Initialize the Firebase app in the service worker by passing in
 // your app's Firebase config object.
 // https://firebase.google.com/docs/web/setup#config-object
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  apiKey: "AIzaSyAsGPRwTKtGrYg2O21-apEQyU3GduLVle0",
+  authDomain: "gc-webathon-29ee0.firebaseapp.com",
+  databaseURL:
+    "https://gc-webathon-29ee0-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "gc-webathon-29ee0",
+  storageBucket: "gc-webathon-29ee0.appspot.com",
+  messagingSenderId: "514479106884",
+  appId: "1:514479106884:web:814ba3af70a62180994511",
 };
 
-const firebaseApp = initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 
 // Retrieve an instance of Firebase Messaging so that it can handle background
 // messages.
-const messaging = getMessaging(firebaseApp);
-onMessage(messaging, (payload) => {
-  console.log("Message received. ", payload);
-  new Notification(payload.notification.title, {
-    body: payload.notification.body,
-  });
-  // ...
-});
+const messaging = firebase.messaging();
 
-onBackgroundMessage(messaging, (payload) => {
+messaging.onBackgroundMessage((payload) => {
   console.log(
     "[firebase-messaging-sw.js] Received background message ",
     payload

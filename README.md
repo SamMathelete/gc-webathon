@@ -61,5 +61,8 @@ The easiest way to deploy a Next.js app is to use the [Vercel Platform](https://
 
 Check out [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
+## Video Demo
+[https://clipchamp.com/watch/LgqSaTXA4wb](https://clipchamp.com/watch/LgqSaTXA4wb)
+
 ## Conclusion
 AirBorneX is a fully functional web application that provides a user-friendly interface for drone delivery requests and real-time tracking of packages. The application is built using modern web development technologies like Next.js, Material-UI, and Firebase. We hope that our application meets the requirements of the GC Webathon '23 and provides a seamless experience to the users and admins.

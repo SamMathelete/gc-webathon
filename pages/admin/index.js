@@ -23,6 +23,7 @@ const AdminHome = () => {
           justifyContent: "flex-start",
           backgroundColor: "white",
           width: "100%",
+          paddingTop: "80px",
         }}
       >
         {!user && (
@@ -47,6 +48,8 @@ const AdminHome = () => {
         )}
         {user && (
           <Box>
+            <div id="master-map" />
+            <div id="requests" />
             <Typography
               sx={{
                 fontSize: "24pt",
@@ -66,7 +69,6 @@ const AdminHome = () => {
               }}
             >
               <AdminMap />
-
               <RequestsTable />
             </Box>
             <Box
@@ -76,6 +78,7 @@ const AdminHome = () => {
                 marginBottom: "5px",
               }}
             >
+              <div id="history" />
               <ActiveDeliveries />
               <PackageHistoryTable />
             </Box>

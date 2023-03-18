@@ -30,7 +30,7 @@ const pages = [
   },
   {
     name: "Track Your Deliveries",
-    link: "/user",
+    link: "/user/track",
   },
   {
     name: "Package History",
@@ -101,7 +101,7 @@ function ResponsiveAppBar() {
           <Typography
             variant="h6"
             noWrap
-            component="a" 
+            component="a"
             href="/"
             sx={{
               ml: 1,

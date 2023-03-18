@@ -26,6 +26,7 @@ Enjoy lightning-fast delivery times that can have your goods at your doorstep in
   <li><b>Request a Drone:</b> Users can select the pickup and delivery points on the map and submit a request for a drone delivery.</li>
   <li><b>Real-Time Tracking:</b> Users can track their package in real-time once a drone has been dispatched. The application provides users with notifications when the drone is on its way to the pickup location and when it reaches the pickup and delivery locations.</li>
   <li><b>Package History:</b> Users can view their past delivery requests and track their status.</li>
+  <li>https://gc-webathon.vercel.app/user</li>
 </ul>
 
 ### <b>Admin Side Functionalities:</b>
@@ -34,6 +35,7 @@ Enjoy lightning-fast delivery times that can have your goods at your doorstep in
   <li><b>Accept or Reject Requests:</b>  Admins can accept or reject delivery requests based on drone availability or any other constraints.</li>
   <li><b>Master Map:</b> Admins can view a master map of all active drones in service and track their location in real-time.</li>
   <li><b>Package History:</b>Admins can view past delivery requests and track their status.</li>
+  <li>https://gc-webathon.vercel.app/admin</li>
 </ul>
 
 ## Getting Started
@@ -56,6 +58,8 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 
 ## Deployment
 We deployed the application on Vercel, which is a cloud platform for serverless deployment. 
+
+<b>Deployed app: </b>[http://gc-webathon.vercel.app/](http://gc-webathon.vercel.app/)
 
 The easiest way to deploy a Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 

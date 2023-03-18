@@ -17,6 +17,35 @@ const AdminHome = () => {
   return (
     <>
       <NavBar />
+      <div style={{ flex: 1 }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            backgroundColor: "#232323",
+            flex: 1,
+          }}
+        >
+          {!user && (
+            <>
+              <div className={style.heroSection}>
+                <div className={style.containerHero}>
+                  <div className={style.contentHero}>
+                    <div className={style.leftSide}>
+                      <h1>Hello there Admin!</h1>
+                      <p>
+                        Login with your official email address or username and
+                        password to access the admin dashboard. Let us control
+                        the drones!
+                      </p>
+                    </div>
+
+                    <div className={style.rightSide}>
+                      <Image src={Admin} layout="fill" />
+                    </div>
+                  </div>
+                </div>
       <Box
         sx={{
           display: "flex",

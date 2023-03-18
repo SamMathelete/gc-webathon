@@ -26,13 +26,14 @@ export default function AdminMap() {
         borderRadius: 5,
         marginTop: "15px",
         marginLeft: "20px",
-        width: "60%",
+        width: "50%",
         maxWidth: "1000px",
         overflow: "hidden",
         height: 600,
-        boxShadow: 12,
         display: "flex",
-        flex: 2,
+        flexGrow: 2,
+        boxShadow: 12,
+
       }}
     >
       <Typography

@@ -26,14 +26,13 @@ export default function AdminMap() {
         borderRadius: 5,
         marginTop: "15px",
         marginLeft: "20px",
-        width: "50%",
+
         maxWidth: "1000px",
         overflow: "hidden",
         height: 600,
         display: "flex",
         flexGrow: 2,
         boxShadow: 12,
-
       }}
     >
       <Typography
@@ -70,9 +69,9 @@ export default function AdminMap() {
           console.log(position);
         }}
       >
-        {console.log(dronePosition)}
         {Object.keys(dronePosition).map((key, index) => {
-          if (dronePosition.isActive) {
+          if (dronePosition[key].isActive) {
+            console.log("rendering marker");
             return (
               <>
                 <Marker

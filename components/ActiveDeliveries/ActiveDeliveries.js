@@ -11,7 +11,13 @@ import {
 import { Box } from "@mui/system";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
-import { collection, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  onSnapshot,
+  doc,
+  setDoc,
+  deleteDoc,
+} from "firebase/firestore";
 import { firestore, db } from "../../firebase/clientApp";
 import { onValue, ref, set } from "@firebase/database";
 
@@ -69,7 +75,7 @@ const ActiveDeliveries = () => {
           (position.lat - target.latitude) ** 2) **
         0.5;
 
-      return (distFromTarget / (distFromSource + distFromTarget)) * 100;
+      return (distFromSource / (distFromSource + distFromTarget)) * 100;
     } catch (err) {
       return 0;
     }
@@ -125,9 +131,9 @@ const ActiveDeliveries = () => {
         height: 600,
         marginTop: "15px",
         marginLeft: "20px",
-        width: "10%",
         marginRight: "20px",
         flex: 1,
+        width: "10%",
       }}
     >
       <Paper

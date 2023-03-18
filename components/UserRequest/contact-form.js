@@ -4,7 +4,7 @@ import style from "../../styles/Request.module.css";
 import Script from "next/script";
 import { LocationContext } from "../../store/location-context";
 import { AuthContext } from "../../store/auth-context";
-import { setDoc, doc, GeoPoint } from "firebase/firestore";
+import { setDoc, doc, GeoPoint, collection, addDoc } from "firebase/firestore";
 import { firestore } from "../../firebase/clientApp";
 
 export default function Fetch() {
@@ -48,7 +48,7 @@ export default function Fetch() {
       weight: enteredWeight,
     };
 
-    await setDoc(doc(firestore, "delivery-requests", authCtx.user.uid), data);
+    await addDoc(collection(firestore, "delivery-requests"), data);
 
     fullNameRef.current.value = "";
     emailRef.current.value = "";

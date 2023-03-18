@@ -47,7 +47,9 @@ const RequestsTable = () => {
             .map((key) => (!data[key].isActive ? 1 : 0))
             .reduce((sum, val) => sum + val, 0)
         );
-        setDrones(Object.keys(data).map((key) => data[key]));
+        setDrones(
+          Object.keys(data).map((key) => ({ droneId: key, ...data[key] }))
+        );
         console.log(droneAvailable);
       }
     });
@@ -61,10 +63,16 @@ const RequestsTable = () => {
 
     delete data.id;
     const drone = drones.find((drone) => drone.isActive === false);
+    console.log(data);
     data.status = "Processing";
     data.droneId = drone.droneId;
     const query = ref(db, `drones/${drone.droneId}`);
-    set(query, { ...drone, isActive: true });
+    set(query, {
+      ...drone,
+      isActive: true,
+      lat: data.source.latitude,
+      lng: data.source.longitude,
+    });
     await setDoc(newDocRef, data);
     await deleteDoc(docRef);
   };

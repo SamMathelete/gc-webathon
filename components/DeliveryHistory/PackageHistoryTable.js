@@ -68,9 +68,9 @@ const DeliveryHistory = () => {
         flexDirection: "column",
         height: 600,
         marginTop: "15px",
-        width: "10%",
         marginRight: "20px",
         flex: 1,
+        width: "10%",
       }}
     >
       <Paper

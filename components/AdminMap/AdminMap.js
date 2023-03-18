@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Map from "react-map-gl";
 import { Box, Typography } from "@mui/material";
+import { Marker } from "react-map-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
+import { db } from "../../firebase/clientApp";
+import { onValue, ref } from "@firebase/database";
 
 export default function AdminMap() {
+  const [position, setPosition] = useState({ lng: 0, lat: 0 });
+  const [dronePosition, setDronePosition] = useState([]);
+  useEffect(() => {
+    const query = ref(db, "drones");
+
+    return onValue(query, (snapshot) => {
+      const data = snapshot.val();
+      if (snapshot.exists()) {
+        setDronePosition(data);
+      }
+    });
+  }, []);
   return (
     <Box
       sx={{
@@ -17,6 +33,7 @@ export default function AdminMap() {
         display: "flex",
         flexGrow: 2,
         boxShadow: 12,
+
       }}
     >
       <Typography
@@ -31,12 +48,12 @@ export default function AdminMap() {
           zIndex: 100,
         }}
       >
-        Current Deliveries
+        Active Drones
       </Typography>
       <Map
         initialViewState={{
-          longitude: 85.81890681675299,
-          latitude: 20.246846400719136,
+          longitude: 85.85028271536169,
+          latitude: 20.285662503199646,
           zoom: 12,
         }}
         style={{
@@ -48,8 +65,39 @@ export default function AdminMap() {
         }}
         mapStyle="mapbox://styles/mapbox/streets-v9"
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_KEY}
-        onClick={(e) => console.log(e.lngLat)}
-      />
+        onClick={(e) => {
+          setPosition({ lng: e.lngLat.lng, lat: e.lngLat.lat });
+          console.log(position);
+        }}
+      >
+        {console.log(dronePosition)}
+        {Object.keys(dronePosition).map((key, index) => {
+          if (dronePosition.isActive) {
+            return (
+              <>
+                <Marker
+                  key={index + 1}
+                  longitude={dronePosition[key].lng}
+                  latitude={dronePosition[key].lat}
+                  anchor="bottom"
+                  color="black"
+                ></Marker>
+                <Marker
+                  key={-index - 1}
+                  longitude={dronePosition[key].lng}
+                  latitude={dronePosition[key].lat}
+                  anchor="bottom"
+                  color="black"
+                >
+                  <Typography sx={{ fontSize: "18pt", marginBottom: "55px" }}>
+                    {key}
+                  </Typography>
+                </Marker>
+              </>
+            );
+          }
+        })}
+      </Map>
     </Box>
   );
 }

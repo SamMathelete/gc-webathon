@@ -125,7 +125,7 @@ function ResponsiveAppBar() {
             </Menu>
           </Box>
           <Box sx={{ flexGrow: 0, display: { xs: "flex", md: "none" } }}>
-            <Icon path={mdiQuadcopter} size={1} color="white" />
+            <Icon path={mdiQuadcopter} size={1} color="#FFC600" />
           </Box>
           <Typography
             variant="h5"
@@ -139,11 +139,11 @@ function ResponsiveAppBar() {
               flexGrow: 1,
               fontWeight: 700,
               letterSpacing: ".3rem",
-              color: "inherit",
+              color: "#FFC600",
               textDecoration: "none",
             }}
           >
-            Drone Delivery
+            AirBorneX
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (

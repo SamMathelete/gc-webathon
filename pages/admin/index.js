@@ -17,72 +17,79 @@ const AdminHome = () => {
   return (
     <>
       <NavBar />
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "flex-start",
-          backgroundColor: "#232323",
-        }}
-      >
-        {!user && (
-          <>
-          <div className={style.heroSection}>
-        <div className={style.containerHero}>
-          <div className={style.contentHero}>
-            <div className={style.leftSide}>
-              <h1>Hello there Admin!</h1>
-              <p>
-                Login with your official email address or 
-                username and password to access the admin dashboard.
-                Let us control the drones!
-              </p>
-            </div>
-
-            <div className={style.rightSide}>
-              <Image src={Admin} layout="fill" />
-            </div>
-          </div>
-        </div>
-      </div>
-          </>
-        )}
-        {user && (
-          <>
-        <Typography
+      <div style={{ flex: 1 }}>
+        <Box
           sx={{
-            // fontSize: "24pt",
-            // fontWeight: 600,
-            // // color: "black",
-            // color:"#efefef",
-            fontFamily: "inherit",
-            marginTop: "40px",
-            marginLeft: "20px",
-            marginRight: "20px",
-
-            fontWeight: "400",
-            fontSize: "50px",
-            letterSpacing: "-0.01em",
-            lineHeight: "75px",
-            textAlign: "left",
-            color: "#efefef",
-            borderBottom: "1px solid #efefef98",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            backgroundColor: "#232323",
+            flex: 1,
           }}
         >
-          Dashboard
-        </Typography>
-        <Box
-          sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}
-        >
-          <AdminMap />
+          {!user && (
+            <>
+              <div className={style.heroSection}>
+                <div className={style.containerHero}>
+                  <div className={style.contentHero}>
+                    <div className={style.leftSide}>
+                      <h1>Hello there Admin!</h1>
+                      <p>
+                        Login with your official email address or username and
+                        password to access the admin dashboard. Let us control
+                        the drones!
+                      </p>
+                    </div>
 
-          <ActiveDeliveries />
+                    <div className={style.rightSide}>
+                      <Image src={Admin} layout="fill" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+          {user && (
+            <>
+              <Typography
+                sx={{
+                  // fontSize: "24pt",
+                  // fontWeight: 600,
+                  // // color: "black",
+                  // color:"#efefef",
+                  fontFamily: "inherit",
+                  marginTop: "40px",
+                  marginLeft: "20px",
+                  marginRight: "20px",
+
+                  fontWeight: "400",
+                  fontSize: "50px",
+                  letterSpacing: "-0.01em",
+                  lineHeight: "75px",
+                  textAlign: "left",
+                  color: "#efefef",
+                  borderBottom: "1px solid #efefef98",
+                }}
+              >
+                Dashboard
+              </Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  marginBottom: "5px",
+                }}
+              >
+                <AdminMap />
+
+                <ActiveDeliveries />
+              </Box>
+              <RequestsTable />
+              <PackageHistoryTable />
+            </>
+          )}
         </Box>
-        <RequestsTable />
-        <PackageHistoryTable />
-        </>
-        )}
-      </Box>
+      </div>
     </>
   );
 };

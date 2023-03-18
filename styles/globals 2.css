@@ -1,0 +1,15 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  /* background: #100F0F; */
+  background: linear-gradient(to right, #100F0F 0%, #1f1f1f 100%);
+}
+
+#__next {
+  height: 100%;
+}
+#map {
+  height: 200px;
+  border: 2px solid red;
+}
